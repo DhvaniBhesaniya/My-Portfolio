@@ -1,0 +1,1633 @@
+/* ============================================
+   THEME VARIABLES
+   ============================================ */
+:root {
+  /* Dark Theme (Default) */
+  --bg-primary: #0f172a;
+  /* Slate 900 */
+  --bg-secondary: #1e293b;
+  /* Slate 800 */
+  --bg-card: #1e293b;
+  --text-primary: #f8fafc;
+  /* Slate 50 */
+  --text-secondary: #cbd5e1;
+  /* Slate 300 */
+  --text-light: #94a3b8;
+  /* Slate 400 */
+  --border-color: #334155;
+
+  /* Space Theme Gradient */
+  --bg-gradient: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+
+  --primary-color: #6366f1;
+  /* Indigo 500 */
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  /* Semi-transparent slate */
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --backdrop-blur: blur(12px);
+
+  --nav-bg: rgba(15, 23, 42, 0.8);
+  --glass-border-nav: rgba(255, 255, 255, 0.1);
+
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="light"] {
+  /* Light Theme */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-light: #94a3b8;
+  --border-color: #e2e8f0;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  --nav-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+/* Reset background for light mode */
+[data-theme="light"] body::before {
+  display: none;
+}
+
+/* ============================================
+   GLOBAL & RESET
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+  background-color: var(--bg-primary);
+  /* Move base color here to show body::before */
+}
+
+body {
+  font-family: 'Open Sans', 'Inter', sans-serif;
+  background-color: transparent;
+  /* Keep base color */
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  position: relative;
+  /* Context for pseudo-element */
+}
+
+/* Blurred Space Background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  /* Fallback */
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0, 0, 0, 0)),
+    var(--bg-gradient, none);
+  background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 100% 100%;
+  background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, no-repeat;
+  /* background-attachment: fixed;
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color var(--transition-normal), color var(--transition-normal); */
+  filter: blur(0.9px);
+  /* The requested blur effect */
+  opacity: 1;
+  pointer-events: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-fast);
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-padding {
+  padding: 100px 0;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 60px 0;
+  }
+
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* ============================================
+   LOADING SCREEN
+   ============================================ */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-primary);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Prepare for slide-up exit transition */
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.loading-content {
+  text-align: center;
+  color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  /* Added spacing */
+}
+
+.hidden {
+  opacity: 0;
+  transform: scale(0.8);
+  /* transition: opacity 0.5s ease, transform 0.5s ease; Remove old transition */
+}
+
+/* Bouncy Entrance Animation */
+@keyframes elastic-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(50px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1) translateY(-10px);
+  }
+
+  70% {
+    transform: scale(0.95) translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Constant Wiggle for fun */
+@keyframes wiggle {
+
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+.fall {
+  /* Use the bouncy animation instead of simple falling */
+  animation: elastic-pop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Specific wiggly animation for icons after they appear */
+.main-icon.fall,
+.sub-icons i.fall {
+  /* We want them to bounce in, then optionally wiggle. 
+     Combining is tricky in one class. Let's just bounce them in really well first.
+  */
+}
+
+/* Slide Up Class for JS to toggle */
+.slide-up-exit {
+  transform: translateY(-100%);
+}
+
+/* ============================================
+   HEADER & NAV
+   ============================================ */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1rem 0;
+  transition: var(--transition-normal);
+}
+
+/* Glass effect for navbar */
+.header-list {
+  display: flex;
+  justify-content: center;
+}
+
+.ul-list {
+  display: flex;
+  gap: 2rem;
+  padding: 0.8rem 1rem 0.8rem 5rem;
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  box-shadow: var(--shadow-md);
+}
+
+.ul-list li {
+  position: relative;
+}
+
+.ul-list li a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  transition: var(--transition-fast);
+}
+
+.ul-list li i {
+  font-size: 1.1rem;
+}
+
+.ul-list li.active a,
+.ul-list li a:hover {
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Mobile Nav Styles can be added here if needed, but keeping simple for now */
+
+/* Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 25px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-normal);
+}
+
+.theme-toggle:hover {
+  transform: rotate(15deg) scale(1.1);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.home {
+  padding-top: 150px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background blob effect */
+.home::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 500px;
+  height: 500px;
+  background: var(--primary-gradient);
+  filter: blur(100px);
+  opacity: 0.1;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  width: 100%;
+}
+
+.info-home {
+  flex: 1;
+}
+
+.info-home h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+}
+
+.info-home h3 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.cursor {
+  display: inline-block;
+  width: 3px;
+  background-color: var(--primary-color);
+  animation: blink 1s infinite;
+}
+
+.info-p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.info-p2 {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+.info-p2 p i {
+  color: var(--primary-color);
+  margin-right: 0.5rem;
+}
+
+.btnn {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.btn-home1,
+.btn-home2 {
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition-normal);
+}
+
+.btn-home1 {
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.btn-home1:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+}
+
+.btn-home2 {
+  background: transparent;
+  border: 2px solid var(--text-primary);
+  color: var(--text-primary);
+}
+
+.btn-home2:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  transform: translateY(-3px);
+}
+
+.follow p {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.follow ul {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.follow ul a {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.follow ul a:hover {
+  color: var(--primary-color);
+  transform: translateY(-3px);
+}
+
+/* Hero Image */
+.home-section+img {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  box-shadow: var(--shadow-xl);
+  animation: morph 8s ease-in-out infinite;
+  border: 4px solid var(--bg-card);
+}
+
+@keyframes morph {
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   ABOUT SECTION
+   ============================================ */
+.about {
+  position: relative;
+}
+
+.about-container {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  align-items: center;
+  padding: 3rem;
+  /* Padding for glass card */
+  margin-bottom: 2rem;
+  border-radius: 50px 0 50px 0 !important;
+  /* Interesting diagonal curve */
+}
+
+.about img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition-normal);
+}
+
+.about img:hover {
+  transform: scale(1.02);
+}
+
+.title h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.info-about p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  font-size: 1.05rem;
+}
+
+/* Info Cards */
+.card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.c1 {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+.c1:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-lg);
+}
+
+.c1 h3 {
+  font-size: 1.1rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.c1 i {
+  font-size: 2rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.c1 p {
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+/* ============================================
+   SKILLS SOLAR SYSTEM
+   ============================================ */
+.skills-solar {
+  width: 100%;
+}
+
+.skills-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.solar-system-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.solar-system {
+  width: 500px;
+  height: 500px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: var(--primary-gradient);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
+  z-index: 10;
+}
+
+/* Orbit Circles */
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px dashed var(--border-color);
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  /* Helps with rendering */
+}
+
+/* Increased sizes for better spacing */
+.orbit-1 {
+  width: 220px;
+  height: 220px;
+  animation: orbit 20s linear infinite;
+}
+
+.orbit-2 {
+  width: 360px;
+  height: 360px;
+  animation: orbit 30s linear infinite reverse;
+}
+
+.orbit-3 {
+  width: 500px;
+  height: 500px;
+  animation: orbit 40s linear infinite;
+}
+
+.planet {
+  position: absolute;
+  width: 55px;
+  /* Slightly larger targets */
+  height: 55px;
+  background: var(--bg-card);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--border-color);
+  transition: border-color 0.3s, transform 0.3s;
+  /* Default center alignment for absolute positioning */
+  transform: translate(-50%, -50%);
+}
+
+/* Re-implementing the orbit logic cleanly */
+@keyframes orbit {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes counter-orbit {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes counter-orbit-reverse {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.planet i {
+  font-size: 1.6rem;
+  color: var(--text-primary);
+}
+
+/* 
+   Explicit Planet Positioning 
+   Calculated to distribute planets evenly on the circle
+*/
+
+/* Orbit 1: 2 Planets (Top, Bottom) */
+.orbit-1 .planet:nth-child(1) {
+  top: 0%;
+  left: 50%;
+  animation: counter-orbit 20s linear infinite;
+}
+
+.orbit-1 .planet:nth-child(2) {
+  top: 100%;
+  left: 50%;
+  animation: counter-orbit 20s linear infinite;
+}
+
+/* Orbit 2: 3 Planets (Triangle: Top, Bottom-Right, Bottom-Left) */
+.orbit-2 .planet:nth-child(1) {
+  top: 0%;
+  left: 50%;
+  animation: counter-orbit-reverse 30s linear infinite;
+}
+
+.orbit-2 .planet:nth-child(2) {
+  top: 75%;
+  left: 93.3%;
+  animation: counter-orbit-reverse 30s linear infinite;
+}
+
+/* ~120 deg */
+.orbit-2 .planet:nth-child(3) {
+  top: 75%;
+  left: 6.7%;
+  animation: counter-orbit-reverse 30s linear infinite;
+}
+
+/* ~240 deg */
+
+/* Orbit 3: 4 Planets (Square: Top, Right, Bottom, Left) */
+.orbit-3 .planet:nth-child(1) {
+  top: 0%;
+  left: 50%;
+  animation: counter-orbit 40s linear infinite;
+}
+
+.orbit-3 .planet:nth-child(2) {
+  top: 50%;
+  left: 100%;
+  animation: counter-orbit 40s linear infinite;
+}
+
+.orbit-3 .planet:nth-child(3) {
+  top: 100%;
+  left: 50%;
+  animation: counter-orbit 40s linear infinite;
+}
+
+.orbit-3 .planet:nth-child(4) {
+  top: 50%;
+  left: 0%;
+  animation: counter-orbit 40s linear infinite;
+}
+
+.planet:hover {
+  border-color: var(--primary-color);
+  z-index: 20;
+  /* Pause animations on hover */
+  animation-play-state: paused !important;
+}
+
+.orbit:hover {
+  animation-play-state: paused;
+}
+
+.orbit:hover .planet {
+  animation-play-state: paused;
+}
+
+/* Skills Cards (Right side) */
+.skills-info {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skills-category {
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid var(--primary-color);
+  transition: var(--transition-normal);
+}
+
+.skills-category:hover {
+  transform: translateX(10px);
+}
+
+.skills-category h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.skill-tag {
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+  background: var(--bg-primary);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* ============================================
+   JOURNEY SECTION
+   ============================================ */
+.journey-content {
+  display: flex;
+  justify-content: center;
+}
+
+.journey-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  width: 100%;
+  align-items: start;
+  /* Fix: Allow independent heights */
+}
+
+.journey-card {
+  padding: 2rem;
+  border-radius: 20px;
+}
+
+.journey-card h2 {
+  margin-bottom: 1.5rem;
+  /* Add space below all journey card headings */
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+.journey-card.summary-card {
+  grid-column: span 2;
+  text-align: center;
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-primary) 100%);
+}
+
+.timeline {
+  margin-top: 1.5rem;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 2rem;
+  border-left: 2px solid var(--border-color);
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -9px;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  border: 4px solid var(--bg-card);
+}
+
+.timeline-date {
+  font-size: 0.85rem;
+  color: var(--primary-color);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.projects-list .project-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: var(--bg-primary);
+  border-radius: 10px;
+  transition: var(--transition-fast);
+}
+
+.projects-list .project-item:hover {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-md);
+  transform: translateX(5px);
+}
+
+.project-item i.fa-code {
+  color: var(--primary-color);
+  background: rgba(99, 102, 241, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* ============================================
+   PROJECTS SHOWCASE
+   ============================================ */
+.projects-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.project-card {
+  background: var(--bg-card);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition-normal);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-xl);
+}
+
+.project-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover img {
+  transform: scale(1.05);
+}
+
+.project-card h3 {
+  padding: 1.5rem 1.5rem 0.5rem;
+  font-size: 1.3rem;
+}
+
+.project-card p {
+  padding: 0 1.5rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.project-card .skills {
+  padding: 0 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.project-card .skills span {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.8rem;
+  background: var(--bg-primary);
+  border-radius: 50px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.project-card .btns {
+  padding: 1.5rem;
+  margin-top: auto;
+  border-top: 1px solid var(--border-color);
+}
+
+.project-card .btn {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 0.8rem;
+  background: var(--secondary-gradient);
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: opacity 0.3s;
+}
+
+.project-card .btn:hover {
+  opacity: 0.9;
+
+}
+
+/* ============================================
+   SERVICES SECTION
+   ============================================ */
+.services-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.service-card {
+  padding: 3rem 2rem;
+  text-align: center;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  z-index: 1;
+}
+
+/* Gradient Bottom Border Effect */
+.service-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--primary-gradient);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.service-card:hover::after {
+  transform: scaleX(1);
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(99, 102, 241, 0.2);
+  /* Enhanced glow on hover */
+  border-color: var(--primary-color);
+}
+
+.service-card img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.5rem;
+  transition: transform 0.4s ease;
+  filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));
+  /* Icon Glow */
+}
+
+/* Float icon on hover */
+.service-card:hover img {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.service-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.service-card p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ============================================
+   GLASSMORPHISM UTILITY
+   ============================================ */
+.glass-effect,
+.about-container,
+.journey-card,
+.project-card,
+.skills-category,
+.service-card,
+.contact-content,
+.c1 {
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+
+.service-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary-color);
+}
+
+.service-card img {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+}
+
+/* ============================================
+   CONTACT SECTION
+   ============================================ */
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  /* Increase form width ratio (was 1fr 1.5fr) */
+  gap: 2rem;
+  /* Reduce gap (was 4rem) */
+  background: var(--bg-card);
+  padding: 2.5rem;
+  /* Reduce padding (was 4rem) */
+  border-radius: 30px;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.contact-item i {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.social-link {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+  font-size: 1.2rem;
+}
+
+.social-link:hover {
+  background: var(--primary-gradient);
+  color: white;
+  transform: translateY(-3px);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.btn-send {
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: var(--transition-normal);
+}
+
+.btn-send:hover {
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  background: var(--bg-secondary);
+  padding: 4rem 0 2rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.footer-logo {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.footer-links a:hover {
+  color: var(--primary-color);
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 1.3rem;
+}
+
+.footer-copy {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 1024px) {
+  .home-container {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  .info-home h1 {
+    width: 100%;
+    font-size: 3rem;
+  }
+
+  .info-p {
+    margin: 0 auto 2rem;
+  }
+
+  .info-p2 {
+    justify-content: center;
+  }
+
+  .btnn {
+    justify-content: center;
+  }
+
+  .follow ul {
+    justify-content: center;
+  }
+
+  .about-container {
+    grid-template-columns: 1fr;
+  }
+
+  .about img {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .card {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .solar-system-container {
+    flex-direction: column;
+    padding: 2rem 0;
+    /* Add padding for vertical flow */
+    gap: 4rem;
+    /* Space between content and orbits */
+  }
+
+  .journey-container {
+    grid-template-columns: 1fr;
+  }
+
+  .journey-card.summary-card {
+    grid-column: span 1;
+  }
+
+  .contact-content {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* ==================================
+     MOBILE NAVIGATION
+     ================================== */
+  .ul-list {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    padding: 0.8rem 1.5rem;
+    /* Tighter padding */
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto;
+    background: var(--nav-bg);
+    box-shadow: var(--shadow-xl);
+    z-index: 1000;
+  }
+
+  .ul-list li {
+    flex-shrink: 0;
+  }
+
+  .ul-list li a span {
+    display: none;
+    /* Icons only */
+  }
+
+  .ul-list li i {
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  footer {
+    padding-bottom: 7rem;
+    width: 100%;
+    /* Ensure full width */
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: border-box;
+  }
+
+  /* ==================================
+     TYPOGRAPHY & SPACING
+     ================================== */
+  .info-home h1 {
+    font-size: 2.2rem;
+    /* Smaller heading */
+    line-height: 1.2;
+  }
+
+  .info-home h3 {
+    font-size: 1.5rem;
+  }
+
+  .section-padding {
+    padding: 40px 0;
+    /* Reduced padding */
+  }
+
+  .container {
+    padding: 0 1.5rem;
+    /* Increased padding for more breathing room on sides */
+  }
+
+  /* Center align common sections on mobile */
+  /* Center align common sections on mobile */
+  .about-container,
+  .journey-container,
+  .contact-content,
+  .skills-container,
+  .home-container {
+    /* General section centering */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Specific padding for skills as requested */
+  .skills-info {
+    padding: 2rem 1rem 0;
+    /* Add top padding to separate from solar system */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    /* Override desktop min-width */
+    box-sizing: border-box;
+  }
+
+  .skills-category {
+    width: 100%;
+    max-width: 380px;
+    /* Constrain width for better readability */
+    margin: 0 auto;
+    text-align: center;
+    /* Center text inside cards */
+  }
+
+  .skills-tags {
+    justify-content: center;
+    /* Center tags */
+  }
+
+  /* Ensure Solar System stays centered */
+  .solar-system-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Crucial for horizontal centering */
+    width: 100%;
+    overflow: hidden;
+    /* Prevent scrollbars from minor orbit overflow */
+    padding: 0;
+    gap: 2rem;
+  }
+
+  /* Reset Solar System to relative/auto to fit in flex container properly */
+  .solar-system {
+    position: relative;
+    width: 340px;
+    /* Match Largest Orbit Size on Mobile */
+    height: 340px;
+    /* Match Largest Orbit Size on Mobile */
+    margin: 0 auto;
+    transform: none !important;
+    /* Reset any scaling if needed, or control here */
+  }
+
+  /* Disable hover shift on mobile for centering consistency */
+  .skills-category:hover {
+    transform: none;
+  }
+
+  .skills-category {
+    border-left: none;
+    /* Optional: might look better centered without left border */
+    border-top: 4px solid var(--primary-color);
+    /* Move accent to top for centered card */
+    margin: 0 auto;
+    /* Ensure centering */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .skills-category h3 {
+    justify-content: center;
+  }
+
+  /* Buttons and social links centering */
+  .btnn,
+  .follow ul,
+  .social-links {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* ==================================
+     SOLAR SYSTEM SCALING
+     ================================== */
+  /* 
+     Mobile scale down:
+     Orbit 1: 140px
+     Orbit 2: 240px
+     Orbit 3: 340px (Fits within 360-390px screens)
+  */
+  .sun {
+    width: 60px;
+    height: 60px;
+  }
+
+  .orbit-1 {
+    width: 140px;
+    height: 140px;
+  }
+
+  .orbit-2 {
+    width: 240px;
+    height: 240px;
+  }
+
+  .orbit-3 {
+    width: 340px;
+    height: 340px;
+  }
+
+  .planet {
+    width: 35px;
+    height: 35px;
+  }
+
+  .planet i {
+    font-size: 1rem;
+  }
+
+  /* Solar System Container Centering */
+  .solar-system-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Crucial for horizontal centering */
+    width: 100%;
+    overflow: hidden;
+    /* Prevent scrollbars from minor orbit overflow */
+  }
+
+  /* ==================================
+     GRID ADJUSTMENTS
+     ================================== */
+  .card,
+  .contact-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    /* Center cards in grid */
+    width: 100%;
+  }
+
+  /* Ensure cards themselves don't stretch weirdly if text is centered */
+  .c1,
+  .project-card,
+  .service-card {
+    width: 100%;
+    max-width: 400px;
+    /* Prevent max-width stretch on tablets */
+    text-align: center;
+    margin: 0 auto 1.5rem;
+    /* Center block and add space */
+  }
+
+  .project-card {
+    margin-bottom: 1rem;
+  }
+
+  /* Fix Journey Card Width */
+  .journey-card {
+    width: 100%;
+    max-width: 360px;
+    /* Fixed consistent width for viewing */
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 480px) {
+
+  /* Ultra-small screens adjustments */
+  .info-home h1 {
+    font-size: 1.8rem;
+  }
+
+  .solar-system {
+    transform: scale(0.85);
+    /* Extra shrink if needed */
+  }
+}

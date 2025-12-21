@@ -1,0 +1,9 @@
+future enhasment: 
+
+in the journey card , to put like company project names and detsild on them in a new tab on click 
+
+
+
+
+EmailJS:  (narutogokuluffy009@gmail.com)
+i have this emailjs to  recive email from user and send email to me.
