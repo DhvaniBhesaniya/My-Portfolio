@@ -384,9 +384,66 @@
                     projects demonstrating expertise in full-stack development.</p>
             </div>
 
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="rust">Rust-Project</button>
+                <button class="filter-btn" data-filter="react">React-Projects</button>
+                <button class="filter-btn" data-filter="ai">AI</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="api">Api</button>
+            </div>
+
             <div class="projects-container">
 
-                <div class="project-card">
+
+                <div class="project-card" data-category="react ai web">
+                    <img src="./assets/img/portfolio/documind.png" alt="Documind">
+                    <h3>Documind</h3>
+                    <p>A Platform to chat with your documents.</p>
+                    <div class="skills">
+                        <span>React</span>
+                        <span>Node</span>
+                        <span>Gemini Ai</span>
+                        <span>Pinecone</span>
+                        <span>MongoDb</span>
+                    </div>
+                    <div class="btns">
+                        <a href="https://github.com/DhvaniBhesaniya/DocuMind" target="_blank" class="btn">Source
+                            Code</a>
+                    </div>
+                </div>
+                <div class="project-card" data-category="rust web">
+                    <img src="./assets/img/portfolio/rust_chat_app.png" alt="Rust Chat App">
+                    <h3>Rust Chat App</h3>
+                    <p>A Chat App built with Rust.</p>
+                    <div class="skills">
+                        <span>Rust</span>
+                        <span>socketioxide</span>
+                        <span>Axum</span>
+                        <span>Html & Js</span>
+                    </div>
+                    <div class="btns">
+                        <a href="https://rust-chat-app-pnkm.onrender.com" target="_blank" class="btn">Live Demo</a>
+                    </div>
+                </div>
+                <div class="project-card" data-category="rust api">
+                    <img src="./assets/img/portfolio/ledger_core.png" alt="Ledger Core">
+                    <h3>Ledger Core</h3>
+                    <p>A high-performance, production-ready ledger system built with Rust, featuring role-based access control (RBAC), comprehensive API key management, and real-time transaction processing.</p>
+                    <div class="skills">
+                        <span>Rust</span>
+                        <span>Docker</span>
+                        <span>Diesel ORM</span>
+                        <span>Postgres</span>
+                    </div>
+                    <div class="btns">
+                        <a href="https://github.com/DhvaniBhesaniya/ledger-core" target="_blank" class="btn">Source
+                            Code</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="react web">
                     <img src="./assets/img/portfolio/estate2.jpg" alt="D's Estate Website">
                     <h3>D's Estate Website</h3>
                     <p>Full-stack real estate website built with React, Node.js, and MongoDB.</p>
@@ -400,7 +457,7 @@
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" data-category="react ai web">
                     <img src="./assets/img/portfolio/gemini.jpeg" alt="Google Gemini Clone">
                     <h3>Google Gemini Clone</h3>
                     <p>AI-powered chatbot application built to replicate Google Gemini's functionality.</p>
@@ -415,7 +472,7 @@
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" data-category="react web">
                     <img src="./assets/img/portfolio/Food-delivery.jpg" alt="Tomato App">
                     <h3>Tomato Food App</h3>
                     <p>Food delivery application with ordering, cart and payment integration.</p>
@@ -429,7 +486,7 @@
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" data-category="ai web">
                     <img src="./assets/img/portfolio/ai-web-summarizer.jpeg" alt="AI Summarizer">
                     <h3>AI Web Summarizer</h3>
                     <p>Summaries web content using advanced natural language processing.</p>
@@ -444,7 +501,7 @@
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" data-category="react web">
                     <img src="./assets/img/portfolio/twiter.png" alt="Twitter Clone">
                     <h3>Twitter Clone</h3>
                     <p>Social media platform clone with real-time updates and auth.</p>
@@ -457,6 +514,7 @@
                         <a href="https://twiter-clone-ol5q.onrender.com/" target="_blank" class="btn">Live Demo</a>
                     </div>
                 </div>
+
 
             </div>
         </div>
