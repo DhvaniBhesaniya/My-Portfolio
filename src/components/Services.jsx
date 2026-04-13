@@ -3,60 +3,61 @@ import * as LucideIcons from "lucide-react"
 import { services } from "@/data/services"
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 50, filter: "blur(5px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
 }
 
 const staggerContainer = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.15 } },
 }
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 px-6">
+    <section id="services" className="py-32 px-6 relative z-10">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <motion.span variants={fadeUp} className="section-label">What I Do</motion.span>
+          <motion.span variants={fadeUp} className="section-label">Capabilities</motion.span>
           <motion.h2 variants={fadeUp} className="section-heading">
-            Features & <span className="text-sky-500">Services</span>
+            Features & <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-violet-400">Services</span>
           </motion.h2>
         </motion.div>
 
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {services.map((service) => {
             const Icon = LucideIcons[service.icon] || LucideIcons.Star
             return (
-              <motion.div key={service.id} variants={fadeUp}>
-                <motion.div
-                  whileHover={{ y: -8 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col gap-4 hover:border-sky-500/30 hover:bg-sky-500/5 transition-colors duration-300 cursor-default"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-sky-500/15 flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-sky-400" />
+              <motion.div key={service.id} variants={fadeUp} className="h-full">
+                <div className="glass-panel glass-panel-hover h-full rounded-3xl p-8 flex flex-col gap-6 cursor-default relative overflow-hidden group">
+                  {/* Subtle hover gradient background effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-teal-500/0 via-transparent to-violet-500/0 group-hover:from-teal-500/5 group-hover:to-violet-500/5 transition-colors duration-500 pointer-events-none" />
+                  
+                  <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center relative z-10">
+                    <Icon className="w-6 h-6 text-teal-400" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-white font-bold text-lg">{service.title}</h3>
-                  <p className="text-white/55 text-sm leading-relaxed">{service.description}</p>
+                  
+                  <h3 className="text-white/90 font-medium text-xl leading-tight relative z-10">{service.title}</h3>
+                  <p className="text-white/50 text-sm leading-relaxed font-light relative z-10">{service.description}</p>
 
-                  {/* Decorative line */}
-                  <div className="mt-auto pt-3 border-t border-white/8">
-                    <div className="w-8 h-0.5 bg-sky-500 rounded-full" />
+                  {/* Decorative subtle dot */}
+                  <div className="mt-auto pt-4 border-t border-white/5 relative z-10">
+                    <div className="w-1.5 h-1.5 rounded-full bg-teal-500/50" />
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
             )
           })}

@@ -22,23 +22,27 @@ export default function Footer() {
   const { scrollTo } = useScrollTo()
 
   return (
-    <footer className="border-t border-white/10 bg-black/30 py-10 px-6">
-      <div className="max-w-7xl mx-auto flex flex-col items-center gap-6">
+    <footer className="relative z-10 border-t border-white/5 py-16 px-6 mt-12 overflow-hidden backdrop-blur-2xl bg-[#030304]/80">
+      {/* Subtle top glare */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-teal-500/20 to-transparent" />
+      
+      <div className="max-w-7xl mx-auto flex flex-col items-center gap-10">
+        
         {/* Logo */}
         <button
           onClick={() => scrollTo("home")}
-          className="font-[Montserrat] font-bold text-xl text-white cursor-pointer"
+          className="font-[Montserrat] font-bold text-2xl text-white cursor-pointer tracking-tight"
         >
-          Dhvani <span className="text-sky-500">Bhesaniya</span>
+          Dhvani<span className="text-teal-400">.</span>
         </button>
 
         {/* Nav links */}
-        <nav className="flex flex-wrap justify-center gap-4">
+        <nav className="flex flex-wrap justify-center gap-x-8 gap-y-4">
           {navLinks.map(({ label, id }) => (
             <button
               key={id}
               onClick={() => scrollTo(id)}
-              className="text-white/50 text-sm hover:text-sky-500 transition-colors cursor-pointer"
+              className="text-white/60 text-sm font-medium hover:text-teal-400 transition-colors cursor-pointer tracking-wide"
             >
               {label}
             </button>
@@ -46,7 +50,7 @@ export default function Footer() {
         </nav>
 
         {/* Social icons */}
-        <div className="flex gap-3">
+        <div className="flex gap-4">
           {socialLinks.map(({ icon: Icon, href, label }) => (
             <a
               key={label}
@@ -54,19 +58,19 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:text-sky-500 hover:border-sky-400/40 hover:bg-sky-500/10 transition-all duration-200"
+              className="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-white/50 hover:text-teal-400 hover:border-teal-400/40 hover:bg-white/10 transition-all duration-300"
             >
-              <Icon size={16} />
+              <Icon size={16} strokeWidth={1.5} />
             </a>
           ))}
         </div>
 
         {/* Divider */}
-        <div className="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="w-full max-w-sm h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
         {/* Copyright */}
-        <p className="text-white/30 text-xs text-center">
-          © 2025 Dhvani Bhesaniya. All Rights Reserved.
+        <p className="text-white/30 text-xs text-center font-medium tracking-widest uppercase">
+          © 2025 Dhvani Bhesaniya. <br className="md:hidden mt-2"/> Crafted with precision.
         </p>
       </div>
     </footer>

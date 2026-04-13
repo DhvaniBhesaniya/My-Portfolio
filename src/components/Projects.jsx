@@ -4,19 +4,19 @@ import { projects } from "@/data/projects"
 import ProjectCard from "@/components/ProjectCard"
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 50, filter: "blur(5px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
 }
 
 const staggerContainer = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.15 } },
 }
 
 const filters = [
   { label: "All", value: "all" },
-  { label: "Rust-Project", value: "rust" },
-  { label: "React-Projects", value: "react" },
+  { label: "Rust", value: "rust" },
+  { label: "React", value: "react" },
   { label: "AI", value: "ai" },
   { label: "Web", value: "web" },
   { label: "API", value: "api" },
@@ -31,44 +31,52 @@ export default function Projects() {
       : projects.filter((p) => p.category.includes(activeFilter))
 
   return (
-    <section id="projects" className="py-24 px-6 bg-white/[0.02]">
+    <section id="projects" className="py-32 px-6 relative z-10 w-full overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
           <motion.span variants={fadeUp} className="section-label">Portfolio</motion.span>
           <motion.h2 variants={fadeUp} className="section-heading">
-            Featured <span className="text-sky-500">Work</span>
+            Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-violet-400">Work</span>
           </motion.h2>
-          <motion.p variants={fadeUp} className="text-white/50 mt-3 max-w-xl mx-auto text-sm">
-            A showcase of my recent projects demonstrating expertise in full-stack development.
+          <motion.p variants={fadeUp} className="text-white/50 mt-4 max-w-xl mx-auto text-base font-light">
+            A curated selection of my recent projects demonstrating expertise in full-stack architecture and backend systems.
           </motion.p>
         </motion.div>
 
         {/* Filter buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(5px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-wrap justify-center gap-2 mb-10"
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-wrap justify-center gap-3 mb-16"
         >
           {filters.map(({ label, value }) => (
             <button
               key={value}
               id={`filter-${value}`}
               onClick={() => setActiveFilter(value)}
-              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${
+              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer relative overflow-hidden ${
                 activeFilter === value
-                  ? "bg-sky-600 text-white shadow-lg shadow-sky-700/30"
-                  : "bg-white/8 text-white/60 border border-white/10 hover:bg-white/15 hover:text-white"
+                  ? "text-teal-900 shadow-lg shadow-teal-500/20"
+                  : "glass-panel text-white/60 hover:text-white hover:bg-white/10"
               }`}
             >
+              {activeFilter === value && (
+                <motion.span
+                  layoutId="active-filter"
+                  className="absolute inset-0 bg-gradient-to-tr from-teal-400 to-emerald-300"
+                  style={{ zIndex: -1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                />
+              )}
               {label}
             </button>
           ))}
@@ -77,17 +85,17 @@ export default function Projects() {
         {/* Projects grid */}
         <motion.div
           layout
-          className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((project) => (
               <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 className="h-full"
               >
                 <ProjectCard project={project} />

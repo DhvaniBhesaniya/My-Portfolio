@@ -19,22 +19,18 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark")
   const { scrollTo } = useScrollTo()
-  const isLight = theme === "light"
 
-  // Theme effect
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme)
     localStorage.setItem("theme", theme)
   }, [theme])
 
-  // Scroll listener
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  // IntersectionObserver for active section
   useEffect(() => {
     const observers = []
     navLinks.forEach(({ id }) => {
@@ -61,23 +57,26 @@ export default function Navbar() {
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50"
-      animate={{
-        backgroundColor: scrolled ? (isLight ? "rgba(255,255,255,0.82)" : "rgba(2,6,23,0.72)") : "transparent",
-        backdropFilter: scrolled ? "blur(16px)" : "blur(0px)",
-        borderBottomColor: scrolled ? (isLight ? "rgba(15,23,42,0.12)" : "rgba(255,255,255,0.08)") : "transparent",
-        borderBottomWidth: "1px",
-        borderBottomStyle: "solid",
-      }}
-      transition={{ duration: 0.3 }}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed top-4 left-0 right-0 z-50 transition-all duration-500 flex justify-center px-4 ${
+        scrolled ? "top-4" : "top-6"
+      }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <nav 
+        className={`flex items-center justify-between transition-all duration-500 w-full max-w-5xl ${
+          scrolled 
+            ? "glass-panel rounded-full px-6 py-2" 
+            : "bg-transparent px-2 py-2"
+        }`}
+      >
         {/* Logo */}
         <button
           onClick={() => handleNavClick("home")}
-          className={`font-[Montserrat] font-bold text-lg cursor-pointer ${isLight ? "text-slate-900" : "text-white"}`}
+          className="font-[Montserrat] font-bold text-lg text-white cursor-pointer tracking-tight"
         >
-          Dhvani <span className="text-sky-500">Bhesaniya</span>
+          Dhvani<span className="text-teal-400">.</span>
         </button>
 
         {/* Desktop Links */}
@@ -86,20 +85,18 @@ export default function Navbar() {
             <li key={id}>
               <button
                 onClick={() => handleNavClick(id)}
-                className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 cursor-pointer relative
+                className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 cursor-pointer relative
                   ${activeSection === id
-                    ? "text-sky-500"
-                    : isLight
-                    ? "text-slate-600 hover:text-slate-900"
+                    ? "text-teal-400"
                     : "text-white/60 hover:text-white"
                   }`}
               >
                 {label}
                 {activeSection === id && (
                   <motion.span
-                    layoutId="active-underline"
-                    className="absolute bottom-0 left-3 right-3 h-0.5 bg-sky-500 rounded-full"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    layoutId="active-pill"
+                    className="absolute inset-0 bg-white/5 rounded-full border border-white/10 -z-10"
+                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
                   />
                 )}
               </button>
@@ -112,25 +109,17 @@ export default function Navbar() {
           <button
             onClick={toggleTheme}
             id="theme-toggle"
-            className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all cursor-pointer ${
-              isLight
-                ? "text-slate-600 hover:text-slate-900 hover:bg-slate-900/10"
-                : "text-white/70 hover:text-white hover:bg-white/10"
-            }`}
+            className="w-10 h-10 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
           >
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === "dark" ? <Sun size={18} strokeWidth={1.5} /> : <Moon size={18} strokeWidth={1.5} />}
           </button>
 
           <button
             onClick={() => setMobileOpen((o) => !o)}
             id="mobile-menu-toggle"
-            className={`md:hidden w-9 h-9 rounded-lg flex items-center justify-center transition-all cursor-pointer ${
-              isLight
-                ? "text-slate-600 hover:text-slate-900 hover:bg-slate-900/10"
-                : "text-white/70 hover:text-white hover:bg-white/10"
-            }`}
+            className="md:hidden w-10 h-10 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
           >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
           </button>
         </div>
       </nav>
@@ -139,23 +128,19 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className={`md:hidden backdrop-blur-xl px-6 py-4 flex flex-col gap-1 ${
-              isLight ? "bg-white/95 border-b border-slate-900/10" : "bg-black/90 border-b border-white/10"
-            }`}
+            initial={{ opacity: 0, scale: 0.95, y: -20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -20 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute top-full left-4 right-4 mt-2 md:hidden glass-panel rounded-3xl p-3 flex flex-col gap-1 shadow-2xl"
           >
             {navLinks.map(({ label, id }) => (
               <button
                 key={id}
                 onClick={() => handleNavClick(id)}
-                className={`text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer
+                className={`text-left px-5 py-3.5 rounded-2xl text-sm font-medium transition-all cursor-pointer
                   ${activeSection === id
-                    ? "text-sky-500 bg-sky-500/10"
-                    : isLight
-                    ? "text-slate-700 hover:text-slate-900 hover:bg-slate-900/5"
+                    ? "text-teal-400 bg-white/10 border border-white/5"
                     : "text-white/70 hover:text-white hover:bg-white/5"
                   }`}
               >

@@ -1,18 +1,21 @@
 import { motion } from "motion/react"
-import { Github, Linkedin, Facebook, Instagram, MapPin, Download, CircleUserRound } from "lucide-react"
-import Particles from "@/components/magicui/particles"
-import TypingAnimation from "@/components/magicui/typing-animation"
+import { Github, Linkedin, Facebook, Instagram, MapPin, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useScrollTo } from "@/hooks/useLenis"
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 40, filter: "blur(4px)" },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    filter: "blur(0px)",
+    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } 
+  },
 }
 
 const staggerContainer = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.15 } },
 }
 
 const socialLinks = [
@@ -36,78 +39,67 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center overflow-hidden pt-16"
+      className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-12"
     >
-      {/* Particle background */}
-      <Particles quantity={80} color="#0ea5e9" className="z-0" />
-
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 z-0 bg-linear-to-b from-transparent via-[#0b1220]/55 to-[#020817]" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center py-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center">
         {/* LEFT COLUMN */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="flex flex-col gap-5"
+          className="flex flex-col gap-6"
         >
-          <motion.p
-            variants={fadeUp}
-            className="text-sky-400 font-semibold text-sm tracking-widest uppercase"
-          >
-            Welcome to my portfolio
-          </motion.p>
+          <motion.div variants={fadeUp} className="inline-flex items-center gap-3">
+             <span className="w-10 h-[1px] bg-teal-500/50" />
+             <p className="text-teal-400 font-medium text-xs tracking-[0.3em] uppercase">
+               Welcome to my portfolio
+             </p>
+          </motion.div>
 
           <motion.h1
             variants={fadeUp}
-            className="font-[Montserrat] font-extrabold text-4xl md:text-5xl lg:text-6xl text-primary leading-tight"
+            className="font-[Montserrat] font-extrabold text-5xl md:text-6xl lg:text-7xl text-white leading-[1.1] tracking-tight"
           >
-            Hi, I'm{" "}
-            <span className="text-sky-400">Dhvani Bhesaniya</span>
+            Hi, I'm <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-violet-400">
+              Dhvani Bhesaniya
+            </span>
           </motion.h1>
 
-          <motion.div
+          <motion.h2
             variants={fadeUp}
-            className="text-xl md:text-2xl font-semibold text-primary/80 h-8"
+            className="text-xl md:text-2xl font-medium text-white/70"
           >
-            <TypingAnimation
-              words={[
-                "Web & Backend Developer",
-                "Node.js Developer",
-                "Rust Developer",
-                "Full-Stack Developer",
-              ]}
-            />
-          </motion.div>
+            Crafting elegant backend systems and <br className="hidden md:block"/>
+            scalable full-stack experiences.
+          </motion.h2>
 
           <motion.p
             variants={fadeUp}
-            className="text-primary/65 text-base leading-relaxed max-w-lg"
+            className="text-white/50 text-base leading-relaxed max-w-lg font-light"
           >
-            As a backend developer, I thrive in challenging environments that encourage
-            continuous learning and creativity. I am dedicated to utilizing my skills to
-            build innovative and secure solutions.
+            I thrive in challenging environments that encourage continuous learning.
+            Dedicated to building innovative, secure, and highly performant solutions.
           </motion.p>
 
           {/* Badges */}
-          <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-500/10 border border-slate-400/20 text-primary/70 text-sm">
-              <MapPin size={14} className="text-sky-400" /> Ahmedabad, India
+          <motion.div variants={fadeUp} className="flex flex-wrap gap-3 mt-2">
+            <span className="glass-panel inline-flex items-center gap-2 px-4 py-2 rounded-full text-white/70 text-sm font-medium">
+              <MapPin size={14} className="text-teal-400" /> Ahmedabad, India
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
-              <span className="w-2 h-2 rounded-full bg-green-400 available-dot" />
+            <span className="glass-panel inline-flex items-center gap-2 px-4 py-2 rounded-full text-emerald-400 text-sm font-medium border-emerald-500/20 bg-emerald-500/5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 available-dot shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
               Available Now
             </span>
           </motion.div>
 
           {/* CTA Buttons */}
-          <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
+          <motion.div variants={fadeUp} className="flex flex-wrap gap-4 mt-4">
             <Button
               id="hire-me-btn"
               size="lg"
               onClick={() => scrollTo("contact")}
-              className="bg-sky-600 hover:bg-sky-500 text-white shadow-lg shadow-sky-700/35"
+              className="bg-white text-[#09090b] hover:bg-white/90 rounded-full px-8 shadow-xl shadow-white/10"
             >
               Hire Me
             </Button>
@@ -116,6 +108,7 @@ export default function Hero() {
               size="lg"
               variant="outline"
               asChild
+              className="rounded-full glass-panel hover:bg-white/10"
             >
               <a href="/assets/resume/Dhvani_Bhesaniya.pdf" download>
                 <Download size={16} />
@@ -125,69 +118,51 @@ export default function Hero() {
           </motion.div>
 
           {/* Social Links */}
-          <motion.div variants={fadeUp} className="flex items-center gap-3">
-            <span className="text-primary/45 text-sm">Follow me:</span>
-            {socialLinks.map(({ icon: Icon, href, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="w-9 h-9 rounded-lg border border-slate-300/20 flex items-center justify-center text-primary/55 hover:text-sky-400 hover:border-sky-400/40 hover:bg-sky-500/10 transition-all duration-200"
-              >
-                <Icon size={17} />
-              </a>
-            ))}
+          <motion.div variants={fadeUp} className="flex items-center gap-4 mt-6">
+            <span className="text-white/40 text-sm uppercase tracking-widest font-semibold text-xs">Connect</span>
+            <div className="w-8 h-[1px] bg-white/10" />
+            <div className="flex gap-3">
+              {socialLinks.map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-white/50 hover:text-teal-400 hover:border-teal-400/40 hover:bg-teal-500/10 transition-all duration-300"
+                >
+                  <Icon size={17} strokeWidth={1.5} />
+                </a>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
 
-        {/* RIGHT COLUMN — Default animated profile */}
+        {/* RIGHT COLUMN — Photo */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center justify-center"
+          initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center justify-center relative"
         >
-          <div className="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full">
-            <motion.div
-              className="absolute inset-4 rounded-full bg-linear-to-br from-sky-500/25 via-cyan-500/20 to-teal-500/20 blur-2xl"
-              animate={{ scale: [0.95, 1.05, 0.95] }}
-              transition={{ duration: 5, repeat: Infinity }}
+          {/* Subtle slow floating motion applied to the entire photo container */}
+          <motion.div 
+            animate={{ y: [-10, 10, -10] }} 
+            transition={{ duration: 8, ease: "easeInOut", repeat: Infinity }}
+            className="relative w-80 h-80 md:w-96 md:h-96"
+          >
+            {/* Soft inner aura, completely replacing the hard glowing ring */}
+            <div className="absolute inset-4 rounded-full hero-photo-ring mix-blend-screen" />
+            
+            {/* The photo itself */}
+            <img
+              src="/images/img.jpg"
+              alt="Dhvani Bhesaniya"
+              className="w-full h-full rounded-full object-cover border border-white/20 shadow-2xl glass-panel relative z-10 p-1"
             />
-            <motion.div
-              className="absolute inset-0 rounded-full border border-sky-400/35 hero-photo-ring"
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-            />
-            <div className="absolute inset-7 rounded-full bg-slate-900/80 border border-slate-300/20 flex items-center justify-center z-10">
-              <CircleUserRound className="w-28 h-28 md:w-32 md:h-32 text-sky-300" />
-            </div>
-            <motion.div
-              className="absolute inset-0 rounded-full"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            >
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-sky-500 shadow-lg shadow-sky-500/60" />
-            </motion.div>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-      >
-        <span className="text-primary/35 text-xs tracking-widest">SCROLL</span>
-        <motion.div
-          className="w-0.5 h-8 bg-linear-to-b from-sky-500 to-transparent rounded-full"
-          animate={{ scaleY: [1, 0.5, 1] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        />
-      </motion.div>
     </section>
   )
 }
