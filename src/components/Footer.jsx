@@ -22,7 +22,7 @@ export default function Footer() {
   const { scrollTo } = useScrollTo()
 
   return (
-    <footer className="relative z-10 border-t border-white/5 py-16 px-6 mt-12 overflow-hidden backdrop-blur-2xl bg-[#030304]/80">
+    <footer className="relative z-10 border-t border-white/5 py-16 px-6 mt-12 overflow-hidden backdrop-blur-2xl bg-white/5">
       {/* Subtle top glare */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-teal-500/20 to-transparent" />
       

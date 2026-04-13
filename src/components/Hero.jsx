@@ -99,7 +99,8 @@ export default function Hero() {
               id="hire-me-btn"
               size="lg"
               onClick={() => scrollTo("contact")}
-              className="bg-white text-[#09090b] hover:bg-white/90 rounded-full px-8 shadow-xl shadow-white/10"
+              className="bg-white text-[#09090b] light:text-[#ffffff] rounded-full px-8 shadow-xl shadow-white/10"
+              style={{ color: "var(--color-inverse, #09090b)" }}
             >
               Hire Me
             </Button>

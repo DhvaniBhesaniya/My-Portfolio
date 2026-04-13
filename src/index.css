@@ -8,6 +8,7 @@
   --color-aurora-1: rgba(20, 184, 166, 0.15); /* Teal */
   --color-aurora-2: rgba(139, 92, 246, 0.15); /* Violet */
   --color-aurora-3: rgba(16, 185, 129, 0.15); /* Emerald */
+  --color-inverse: #09090B;
 }
 
 /* ===== GLOBAL RESET & ELEGANCE ===== */
@@ -38,20 +39,23 @@ body {
   --color-aurora-1: rgba(20, 184, 166, 0.2);
   --color-aurora-2: rgba(139, 92, 246, 0.12);
   --color-aurora-3: rgba(16, 185, 129, 0.15);
+  
+  /* OVERRIDE NATIVE TAILWIND COLORS FOR LIGHT MODE */
+  --color-white: #18181B;
+  --color-inverse: #ffffff;
 }
 
 [data-theme="light"] .glass-panel {
-  background: rgba(255, 255, 255, 0.65) !important;
-  border-color: rgba(0, 0, 0, 0.05) !important;
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04) !important;
 }
 
-[data-theme="light"] .text-white\/70 { color: rgba(24, 24, 27, 0.7); }
-[data-theme="light"] .text-white\/55 { color: rgba(24, 24, 27, 0.55); }
-[data-theme="light"] .text-white\/50 { color: rgba(24, 24, 27, 0.5); }
-[data-theme="light"] .text-white\/40 { color: rgba(24, 24, 27, 0.4); }
-[data-theme="light"] .text-white { color: #18181B; }
-[data-theme="light"] .border-white\/10 { border-color: rgba(0,0,0,0.06); }
+[data-theme="light"] .glass-panel-hover:hover {
+  background: rgba(0, 0, 0, 0.06) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
+}
 
 /* ===== GLASSMORPHIC UTILITIES ===== */
 .glass-panel {

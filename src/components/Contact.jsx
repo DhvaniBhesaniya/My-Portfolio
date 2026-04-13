@@ -180,12 +180,15 @@ export default function Contact() {
                 id="contact-submit"
                 type="submit"
                 disabled={status === "sending"}
+                style={{
+                  ...(!(status === "success" || status === "error") ? { color: "var(--color-inverse, #09090b)" } : {})
+                }}
                 className={`mt-4 h-14 rounded-2xl font-medium text-sm transition-all duration-300 flex items-center justify-center gap-3 relative overflow-hidden ${
                   status === "success"
                     ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
                     : status === "error"
                     ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
-                    : "bg-white text-[#09090b] hover:bg-white/90 shadow-xl shadow-white/5"
+                    : "bg-white text-[#09090b] light:text-[#ffffff] hover:bg-white/90 shadow-xl shadow-white/5"
                 }`}
               >
                 <AnimatePresence mode="wait">

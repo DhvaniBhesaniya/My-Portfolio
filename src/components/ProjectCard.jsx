@@ -21,11 +21,11 @@ export default function ProjectCard({ project }) {
           }}
         />
         {/* Soft elegant gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-inverse)] via-transparent to-transparent opacity-80" />
       </div>
 
       {/* Content */}
-      <div className="flex flex-col flex-1 gap-4 p-6 relative z-10 -mt-10 bg-gradient-to-t from-[#121215]/40 via-transparent backdrop-blur-sm rounded-t-3xl pt-8">
+      <div className="flex flex-col flex-1 gap-4 p-6 relative z-10 -mt-10 bg-gradient-to-t from-white/10 via-transparent backdrop-blur-sm rounded-t-3xl pt-8">
         <h3 className="text-white/90 font-medium text-xl leading-tight">{title}</h3>
         <p className="text-white/50 text-sm leading-relaxed flex-1 font-light">{description}</p>
 
