@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dhvani Bhesaniya - Web & Backend Developer Portfolio">
+    <meta name="keywords" content="Dhvani Bhesaniya, Web Developer, Backend Developer, Portfolio, Gujarat, India">
+    <title>Dhvani Bhesaniya - Web & Backend Developer</title>
+    <!-- Favicons -->
+    <link href="assets/img/favicon.jpeg" rel="icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:wght@300..800&family=Playfair+Display:wght@400..900&family=Unbounded:wght@200..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            // Initialize EmailJS with your Public Key
+            emailjs.init("_4EsRjANtwBBAVH8X");
+        })();
+    </script>
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <i class="fa-solid fa-laptop-code fa-5x main-icon hidden"></i>
+            <h1 id="loading-text" class="hidden">MY PROFILE</h1>
+            <div class="sub-icons">
+                <i class="fa-brands fa-github fa-2x hidden"></i>
+                <i class="fa-solid fa-code fa-2x hidden"></i>
+                <i class="fa-solid fa-user fa-2x hidden"></i>
+            </div>
+            <h2 id="designer-text" class="hidden">Dhvani Bhesaniya</h2>
+        </div>
+    </div>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon" id="theme-icon"></i>
+    </button>
+
+    <!-- Header -->
+    <header class="header-list">
+        <div class="container div-list">
+            <ul class="ul-list">
+                <li class="active">
+                    <a href="#home"><i class="fa-solid fa-house"></i> <span>Home</span></a>
+                </li>
+                <li>
+                    <a href="#about"><i class="fa-regular fa-address-card"></i> <span>About</span></a>
+                </li>
+                <li>
+                    <a href="#skills"><i class="fa-solid fa-star"></i> <span>Skills</span></a>
+                </li>
+                <li>
+                    <a href="#journey"><i class="fa-solid fa-route"></i> <span>Journey</span></a>
+                </li>
+                <li>
+                    <a href="#project"><i class="fa-regular fa-folder-open"></i> <span>Projects</span></a>
+                </li>
+                <li>
+                    <a href="#services"><i class="fa-solid fa-code"></i> <span>Services</span></a>
+                </li>
+                <li>
+                    <a href="#contact"><i class="fa-regular fa-envelope"></i> <span>Contact</span></a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <section class="home" id="home">
+        <div class="container">
+            <div class="home-container">
+                <div class="home-section">
+                    <div class="info-home">
+                        <h1>Hi, I'm Dhvani Bhesaniya</h1>
+                        <h3 id="typing-text">Web & Backend Developer</h3>
+                        <div class="info-p">
+                            <p>As a backend developer, I thrive in challenging environments that encourage continuous
+                                learning and creativity. I am dedicated to utilizing my skills to build innovative and
+                                secure solutions.</p>
+                        </div>
+                        <div class="info-p2">
+                            <p><i class="fa-solid fa-location-dot"></i> Ahmedabad, India</p>
+                            <p><i class="fa-solid fa-briefcase"></i> Available Now</p>
+                        </div>
+                        <div class="btnn">
+                            <a href="#contact" class="btn-home1"><i class="fa-solid fa-arrow-right"></i> Hire Me</a>
+                            <a href="./assets/resume/Dhvani_Bhesaniya.pdf" target="_blank" class="btn-home2" download><i
+                                    class="fa-solid fa-download"></i> Resume</a>
+                        </div>
+                        <div class="follow">
+                            <p>Follow me:</p>
+                            <ul>
+                                <li><a href="https://github.com/DhvaniBhesaniya" target="_blank" aria-label="GitHub"><i
+                                            class="fa-brands fa-github"></i></a></li>
+                                <li><a href="https://linkedin.com/in/dhvani-bhesaniya" target="_blank"
+                                        aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a></li>
+                                <li><a href="https://www.facebook.com/profile.php?id=100069188478674" target="_blank"
+                                        aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a></li>
+                                <li><a href="https://www.instagram.com/_d_patel06_?igsh=MWFraGIwcm9xbnJydQ=="
+                                        target="_blank" aria-label="Instagram"><i
+                                            class="fa-brands fa-instagram"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <img src="images/img2.jpg" alt="Dhvani Bhesaniya">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about section-padding" id="about">
+        <div class="container">
+            <div class="title">
+                <p style="color: var(--primary-color); font-weight: 700; letter-spacing: 1px; margin-bottom: 0.5rem;">
+                    ABOUT ME</p>
+                <h1>Building Meaningful<br>Digital Experiences</h1>
+            </div>
+
+            <div class="about-container">
+                <img src="images/img.jpg" alt="Dhvani Bhesaniya - About">
+                <div class="info-about">
+                    <div class="about-info">
+                        <p>
+                            I'm a Web & Backend Developer passionate about building innovative and secure backend
+                            solutions.
+                            My journey began with a strong foundation in IT Engineering and evolved into a deep
+                            expertise in backend development, problem-solving, and creating efficient systems.
+                        </p>
+                        <p>
+                            When I'm not coding, I enjoy learning new technologies, improving my projects, and exploring
+                            better ways to make applications faster, more secure, and scalable.
+                        </p>
+                    </div>
+                    <h2>What Drives Me</h2>
+                    <div class="card">
+                        <div class="c1">
+                            <i class="fa-solid fa-code"></i>
+                            <h3>Technologies</h3>
+                            <p>Rust, Node.js, React</p>
+                        </div>
+                        <div class="c1">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <h3>Education</h3>
+                            <p>B.Tech IT</p>
+                        </div>
+                        <div class="c1">
+                            <i class="fa-solid fa-folder-open"></i>
+                            <h3>Projects</h3>
+                            <p>5+ Major Projects</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-solar section-padding" id="skills">
+        <div class="container">
+            <div class="skills-header">
+                <p style="color: var(--primary-color); font-weight: 700; letter-spacing: 1px;">SKILLS</p>
+                <h1>Technical Expertise</h1>
+            </div>
+
+            <div class="solar-system-container">
+                <div class="solar-system">
+                    <!-- Central Sun (Main Skill Icon) -->
+                    <div class="sun">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+
+                    <!-- Orbit 1 - Inner Orbit -->
+                    <div class="orbit orbit-1">
+                        <div class="planet" title="Node.js">
+                            <i class="fab fa-node"></i>
+                        </div>
+                        <div class="planet" title="React" style="animation-delay: -7s;">
+                            <i class="fab fa-react"></i>
+                        </div>
+                    </div>
+
+                    <!-- Orbit 2 - Middle Orbit -->
+                    <div class="orbit orbit-2">
+                        <div class="planet" title="MongoDB">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="planet" title="Express" style="animation-delay: -5s;">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="planet" title="AWS" style="animation-delay: -15s;">
+                            <i class="fab fa-aws"></i>
+                        </div>
+                        <!-- <div class="planet" title="Firebase" style="animation-delay: -15s;">
+                            <i class="fab fa-firebase"></i>
+                        </div> -->
+                    </div>
+
+                    <!-- Orbit 3 - Outer Orbit -->
+                    <div class="orbit orbit-3">
+                        <div class="planet" title="Rust">
+                            <i class="fas fa-gear"></i>
+                        </div>
+                        <div class="planet" title="Figma" style="animation-delay: -8s;">
+                            <i class="fab fa-figma"></i>
+                        </div>
+                        <div class="planet" title="Python" style="animation-delay: -16s;">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div class="planet" title="Web Design" style="animation-delay: -24s;">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills Info -->
+                <div class="skills-info">
+                    <div class="skills-category featured">
+                        <h3><i class="fas fa-star"></i> Core Expertise</h3>
+                        <div class="skills-tags">
+                            <span class="skill-tag featured-tag">Rust</span>
+                            <span class="skill-tag featured-tag">Axum</span>
+                            <span class="skill-tag featured-tag">Tokio</span>
+                            <span class="skill-tag featured-tag">Polars</span>
+                            <span class="skill-tag featured-tag">Napi</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-category">
+                        <h3><i class="fas fa-code"></i> Languages</h3>
+                        <div class="skills-tags">
+                            <span class="skill-tag">Rust</span>
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">JavaScript</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-category">
+                        <h3><i class="fas fa-server"></i> Backend</h3>
+                        <div class="skills-tags">
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">Axum</span>
+                            <span class="skill-tag">Napi</span>
+                            <span class="skill-tag">Tokio</span>
+                            <span class="skill-tag">Express</span>
+                        </div>
+                    </div>
+
+                    <div class="skills-category">
+                        <h3><i class="fas fa-database"></i> Data</h3>
+                        <div class="skills-tags">
+                            <span class="skill-tag">TiKV</span>
+                            <span class="skill-tag">Elasticsearch</span>
+                            <span class="skill-tag">MongoDB</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">Redis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section class="journey section-padding" id="journey">
+        <div class="container">
+            <div class="skills-header">
+                <p style="color: var(--primary-color); font-weight: 700; letter-spacing: 1px;">JOURNEY</p>
+                <h1>Professional Timeline</h1>
+            </div>
+
+            <div class="journey-content">
+                <div class="journey-container">
+                    <!-- Summary Card -->
+                    <div class="journey-card summary-card">
+                        <div class="journey-icon"
+                            style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem;">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <h2>Summary</h2>
+                        <div class="journey-content-text">
+                            <p>I am a backend developer with a strong foundation in IT Engineering. I specialize in
+                                creating
+                                efficient backend code and excel in solving complex problems through thorough research
+                                and
+                                analysis.</p>
+                            <div
+                                style="display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; flex-wrap: wrap; color: var(--text-secondary);">
+                                <p><i class="fa-solid fa-location-dot"></i> Gujarat, India</p>
+                                <p><i class="fa-solid fa-envelope"></i> dhvani612@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education Timeline -->
+                    <div class="journey-card">
+                        <h2><i class="fa-solid fa-graduation-cap"
+                                style="color: var(--primary-color); margin-right: 10px;"></i> Education</h2>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <h3>Bachelor In Info. Tech.</h3>
+                                <span class="timeline-date">2020 - 2024</span>
+                                <p><em>Rk University Rajkot, Gujarat</em></p>
+                                <p>CGPA: 8.56</p>
+                            </div>
+                            <!-- <div class="timeline-item">
+                                <h3>Higher Secondary School</h3>
+                                <span class="timeline-date">2019 - 2020</span>
+                                <p><em>Swaminarayan Gurukul, Gondal, Gujarat, IN</em></p>
+                                <p>Performance: 51%</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h3>Secondary School</h3>
+                                <span class="timeline-date">2004 - 2017</span>
+                                <p><em>Saint Mary's School, Gondal, Gujarat, IN</em></p>
+                                <p>Performance: 68%</p>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <!-- Professional Experience -->
+                    <div class="journey-card">
+                        <h2><i class="fa-solid fa-briefcase"
+                                style="color: var(--primary-color); margin-right: 10px;"></i>
+                            Experience</h2>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <h3>Backend Developer Intern</h3>
+                                <span class="timeline-date">Dec 2023 - May 2024</span>
+                                <p><em>Inventyv Software Services</em></p>
+                                <p>Rust, TiKV, Elastic Search</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Projects Summary -->
+                    <div class="journey-card">
+                        <h2><i class="fa-solid fa-code" style="color: var(--primary-color); margin-right: 10px;"></i>
+                            Early Projects</h2>
+                        <div class="projects-list">
+                            <div class="project-item">
+                                <i class="fa-solid fa-mobile-screen"></i>
+                                <div>
+                                    <h3>D's Estate Website</h3>
+                                    <p style="font-size: 0.8em; color: var(--text-light);">React • 2022</p>
+                                </div>
+                            </div>
+                            <div class="project-item">
+                                <i class="fa-solid fa-desktop"></i>
+                                <div>
+                                    <h3>Twitter Clone</h3>
+                                    <p style="font-size: 0.8em; color: var(--text-light);">React • 2023</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="project section-padding" id="project">
+        <div class="container">
+            <div class="skills-header">
+                <p style="color: var(--primary-color); font-weight: 700; letter-spacing: 1px;">PORTFOLIO</p>
+                <h1>Featured Work</h1>
+                <p style="color: var(--text-secondary); max-width: 600px; margin: 1rem auto;">A showcase of my recent
+                    projects demonstrating expertise in full-stack development.</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="rust">Rust-Project</button>
+                <button class="filter-btn" data-filter="react">React-Projects</button>
+                <button class="filter-btn" data-filter="ai">AI</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="api">Api</button>
+            </div>
+
+            <div class="projects-container">
+
+
+                <div class="project-card" data-category="react ai web">
+                    <img src="./assets/img/portfolio/documind.png" alt="Documind">
+                    <h3>Documind</h3>
+                    <p>A Platform to chat with your documents.</p>
+                    <div class="skills">
+                        <span>React</span>
+                        <span>Node</span>
+                        <span>Gemini Ai</span>
+                        <span>Pinecone</span>
+                        <span>MongoDb</span>
+                    </div>
+                    <div class="btns">
+                        <a href="https://github.com/DhvaniBhesaniya/DocuMind" target="_blank" class="btn">Source
+                            Code</a>
+                    </div>
+                </div>
+                <div class="project-card" data-category="rust web">
+                    <img src="./assets/img/portfolio/rust_chat_app.png" alt="Rust Chat App">
+                    <h3>Rust Chat App</h3>
+                    <p>A Chat App built with Rust.</p>
+                    <div class="skills">
+                        <span>Rust</span>
+                        <span>socketioxide</span>
+                        <span>Axum</span>
+                        <span>Html & Js</span>
+                    </div>
+                    <div class="btns">
+                        <a href="https://rust-chat-app-pnkm.onrender.com" target="_blank" class="btn">Live Demo</a>
+                    </div>
+                </div>
+                <div class="project-card" data-category="rust api">
+                    <img src="./assets/img/portfolio/ledger_core.png" alt="Ledger Core">
+                    <h3>Ledger Core</h3>
+                    <p>A high-performance, production-ready ledger system built with Rust, featuring role-based access control (RBAC), comprehensive API key management, and real-time transaction processing.</p>
+                    <div class="skills">
+                        <span>Rust</span>
+                        <span>Docker</span>
+                        <span>Diesel ORM</span>
+                        <span>Postgres</span>
+                    </div>
+                    <div class="btns">
+                        <a href="https://github.com/DhvaniBhesaniya/ledger-core" target="_blank" class="btn">Source
+                            Code</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="react web">
+                    <img src="./assets/img/portfolio/estate2.jpg" alt="D's Estate Website">
+                    <h3>D's Estate Website</h3>
+                    <p>Full-stack real estate website built with React, Node.js, and MongoDB.</p>
+                    <div class="skills">
+                        <span>React</span>
+                        <span>Node.js</span>
+                        <span>MongoDB</span>
+                    </div>
+                    <div class="btns">
+                        <a href="https://d-mern-estate.onrender.com/" target="_blank" class="btn">Live Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="react ai web">
+                    <img src="./assets/img/portfolio/gemini.jpeg" alt="Google Gemini Clone">
+                    <h3>Google Gemini Clone</h3>
+                    <p>AI-powered chatbot application built to replicate Google Gemini's functionality.</p>
+                    <div class="skills">
+                        <span>React</span>
+                        <span>Node.js</span>
+                        <span>AI API</span>
+                    </div>
+                    <div class="btns">
+                        <a href="https://google-gemini-2-0-clone.onrender.com/" target="_blank" class="btn">Live
+                            Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="react web">
+                    <img src="./assets/img/portfolio/Food-delivery.jpg" alt="Tomato App">
+                    <h3>Tomato Food App</h3>
+                    <p>Food delivery application with ordering, cart and payment integration.</p>
+                    <div class="skills">
+                        <span>React</span>
+                        <span>Node.js</span>
+                        <span>Stripe</span>
+                    </div>
+                    <div class="btns">
+                        <a href="https://food-ordering-xaxd.onrender.com" target="_blank" class="btn">Live Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="ai web">
+                    <img src="./assets/img/portfolio/ai-web-summarizer.jpeg" alt="AI Summarizer">
+                    <h3>AI Web Summarizer</h3>
+                    <p>Summaries web content using advanced natural language processing.</p>
+                    <div class="skills">
+                        <span>AI/ML</span>
+                        <span>JS</span>
+                        <span>RapidAPI</span>
+                    </div>
+                    <div class="btns">
+                        <a href="https://dhvanibhesaniya.github.io/Ai-Summarizer/" target="_blank" class="btn">Live
+                            Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="react web">
+                    <img src="./assets/img/portfolio/twiter.png" alt="Twitter Clone">
+                    <h3>Twitter Clone</h3>
+                    <p>Social media platform clone with real-time updates and auth.</p>
+                    <div class="skills">
+                        <span>React</span>
+                        <span>Node</span>
+                        <span>Socket.io</span>
+                    </div>
+                    <div class="btns">
+                        <a href="https://twiter-clone-ol5q.onrender.com/" target="_blank" class="btn">Live Demo</a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services section-padding" id="services">
+        <div class="container">
+            <div class="skills-header">
+                <p style="color: var(--primary-color); font-weight: 700; letter-spacing: 1px;">WHAT I DO</p>
+                <h1>Features & Services</h1>
+            </div>
+            <div class="services-container">
+
+                <div class="service-card">
+                    <img src="images/web.svg" alt="Backend">
+                    <h3>Backend Development</h3>
+                    <p>Building robust, scalable backend systems using Node.js, Express, and Rust.</p>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/app.svg" alt="Full-Stack">
+                    <h3>Full-Stack Development</h3>
+                    <p>Creating end-to-end solutions with React, Node.js, and MongoDB.</p>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/dm.svg" alt="Database">
+                    <h3>Database Design</h3>
+                    <p>Designing efficient database schemas for optimal performance.</p>
+                </div>
+
+                <div class="service-card">
+                    <img src="images/seo.svg" alt="API">
+                    <h3>API Development</h3>
+                    <p>Developing RESTful APIs and integrating third-party services.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact section-padding" id="contact">
+        <div class="container">
+            <div class="skills-header">
+                <p style="color: var(--primary-color); font-weight: 700; letter-spacing: 1px;">CONTACT ME</p>
+                <h1>Get in Touch</h1>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3 style="margin-bottom: 1rem;">Let's collaborate!</h3>
+                    <p style="margin-bottom: 2rem; color: var(--text-secondary);">I'm always open to discuss exciting
+                        projects and new opportunities.</p>
+
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <a href="mailto:dhvani612@gmail.com">dhvani612@gmail.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <a href="tel:+919316590044">(+91) 9316590044</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Gujarat, India</span>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="https://github.com/DhvaniBhesaniya" class="social-link" target="_blank"
+                            aria-label="GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/dhvani-bhesaniya" class="social-link" target="_blank"
+                            aria-label="LinkedIn">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100069188478674" class="social-link"
+                            target="_blank" aria-label="Facebook">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                        <a href="https://www.instagram.com/_d_patel06_?igsh=MWFraGIwcm9xbnJydQ==" class="social-link"
+                            target="_blank" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form id="contact-form">
+                        <!-- Hidden inputs not needed for EmailJS, but keeping cleaner structure -->
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required name="name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required name="email">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Subject" required name="subject">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-send">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h2 class="footer-logo">Dhvani Bhesaniya</h2>
+            <ul class="footer-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#journey">Journey</a></li>
+                <li><a href="#project">Projects</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="footer-social">
+                <a href="https://github.com/DhvaniBhesaniya" target="_blank" aria-label="GitHub"><i
+                        class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com/in/dhvani-bhesaniya" target="_blank" aria-label="LinkedIn"><i
+                        class="fa-brands fa-linkedin"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=100069188478674" target="_blank"
+                    aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/_d_patel06_?igsh=MWFraGIwcm9xbnJydQ==" target="_blank"
+                    aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+            <p class="footer-copy">&copy; 2025 Dhvani Bhesaniya. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
