@@ -609,7 +609,7 @@ Use `useRef` for the form element.
 - Logo: `"Dhvani Bhesaniya"` — same font, primary color
 - Nav links row: Home · About · Skills · Journey · Projects · Services · Contact
 - Social icon row: GitHub, LinkedIn, Facebook, Instagram (same URLs)
-- Copyright: `© 2025 Dhvani Bhesaniya. All Rights Reserved.`
+- Copyright: `© 2026 Dhvani Bhesaniya. All Rights Reserved.`
 - Thin top border `border-t border-white/10`
 
 ---

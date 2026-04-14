@@ -1,4 +1,5 @@
-import { Github, Linkedin, Facebook, Instagram } from "lucide-react"
+import { FaGithub, FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa6"
+import { motion } from "motion/react"
 import { useScrollTo } from "@/hooks/useLenis"
 
 const navLinks = [
@@ -12,10 +13,10 @@ const navLinks = [
 ]
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com/DhvaniBhesaniya", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com/in/dhvani-bhesaniya", label: "LinkedIn" },
-  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=100069188478674", label: "Facebook" },
-  { icon: Instagram, href: "https://www.instagram.com/_d_patel06_?igsh=MWFraGIwcm9xbnJydQ==", label: "Instagram" },
+  { icon: FaGithub, href: "https://github.com/DhvaniBhesaniya", label: "GitHub", hoverColor: "hover:text-white hover:border-white/40" },
+  { icon: FaLinkedin, href: "https://linkedin.com/in/dhvani-bhesaniya", label: "LinkedIn", hoverColor: "hover:text-[#0A66C2] hover:border-[#0A66C2]/40" },
+  { icon: FaFacebook, href: "https://www.facebook.com/profile.php?id=100069188478674", label: "Facebook", hoverColor: "hover:text-[#1877F2] hover:border-[#1877F2]/40" },
+  { icon: FaInstagram, href: "https://www.instagram.com/_d_patel06_?igsh=MWFraGIwcm9xbnJydQ==", label: "Instagram", hoverColor: "hover:text-[#E4405F] hover:border-[#E4405F]/40" },
 ]
 
 export default function Footer() {
@@ -51,17 +52,19 @@ export default function Footer() {
 
         {/* Social icons */}
         <div className="flex gap-4">
-          {socialLinks.map(({ icon: Icon, href, label }) => (
-            <a
+          {socialLinks.map(({ icon: Icon, href, label, hoverColor }) => (
+            <motion.a
               key={label}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-white/50 hover:text-teal-400 hover:border-teal-400/40 hover:bg-white/10 transition-all duration-300"
+              whileHover={{ scale: 1.15, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className={`w-10 h-10 rounded-full glass-panel flex items-center justify-center text-white/50 hover:bg-white/10 transition-colors duration-300 ${hoverColor}`}
             >
-              <Icon size={16} strokeWidth={1.5} />
-            </a>
+              <Icon size={18} />
+            </motion.a>
           ))}
         </div>
 
@@ -70,7 +73,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <p className="text-white/30 text-xs text-center font-medium tracking-widest uppercase">
-          © 2025 Dhvani Bhesaniya. <br className="md:hidden mt-2"/> Crafted with precision.
+          © {new Date().getFullYear()} Dhvani Bhesaniya. <br className="md:hidden mt-2"/> Crafted with precision.
         </p>
       </div>
     </footer>

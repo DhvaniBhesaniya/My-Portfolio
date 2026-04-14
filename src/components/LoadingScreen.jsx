@@ -10,14 +10,14 @@ export default function LoadingScreen({ isLoading }) {
           exit={{ y: "-100%" }}
           transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
         >
-          <motion.p
+          {/* <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-xs font-bold tracking-[0.3em] text-sky-400 uppercase"
           >
             MY PROFILE
-          </motion.p>
+          </motion.p> */}
 
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}

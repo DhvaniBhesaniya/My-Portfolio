@@ -1,5 +1,6 @@
 import { motion } from "motion/react"
-import { Github, Linkedin, Facebook, Instagram, MapPin, Download } from "lucide-react"
+import { MapPin, Download } from "lucide-react"
+import { FaGithub, FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa6"
 import { Button } from "@/components/ui/button"
 import { useScrollTo } from "@/hooks/useLenis"
 
@@ -19,17 +20,19 @@ const staggerContainer = {
 }
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com/DhvaniBhesaniya", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com/in/dhvani-bhesaniya", label: "LinkedIn" },
+  { icon: FaGithub, href: "https://github.com/DhvaniBhesaniya", label: "GitHub", hoverColor: "hover:text-white" },
+  { icon: FaLinkedin, href: "https://linkedin.com/in/dhvani-bhesaniya", label: "LinkedIn", hoverColor: "hover:text-[#0A66C2]" },
   {
-    icon: Facebook,
+    icon: FaFacebook,
     href: "https://www.facebook.com/profile.php?id=100069188478674",
     label: "Facebook",
+    hoverColor: "hover:text-[#1877F2]"
   },
   {
-    icon: Instagram,
+    icon: FaInstagram,
     href: "https://www.instagram.com/_d_patel06_?igsh=MWFraGIwcm9xbnJydQ==",
     label: "Instagram",
+    hoverColor: "hover:text-[#E4405F]"
   },
 ]
 
@@ -123,17 +126,19 @@ export default function Hero() {
             <span className="text-white/40 text-sm uppercase tracking-widest font-semibold text-xs">Connect</span>
             <div className="w-8 h-[1px] bg-white/10" />
             <div className="flex gap-3">
-              {socialLinks.map(({ icon: Icon, href, label }) => (
-                <a
+              {socialLinks.map(({ icon: Icon, href, label, hoverColor }) => (
+                <motion.a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-white/50 hover:text-teal-400 hover:border-teal-400/40 hover:bg-teal-500/10 transition-all duration-300"
+                  whileHover={{ scale: 1.15, rotate: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`w-10 h-10 rounded-full glass-panel flex items-center justify-center text-white/50 hover:bg-teal-500/10 transition-colors duration-300 ${hoverColor}`}
                 >
-                  <Icon size={17} strokeWidth={1.5} />
-                </a>
+                  <Icon size={18} />
+                </motion.a>
               ))}
             </div>
           </motion.div>

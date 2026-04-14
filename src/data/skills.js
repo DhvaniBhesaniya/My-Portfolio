@@ -2,12 +2,12 @@ export const skillGroups = [
   {
     label: "Core Expertise",
     variant: "primary",
-    skills: ["Rust", "Axum", "Tokio", "Polars", "Napi"],
+    skills: ["Rust", "Axum", "Tokio", "Polars", "Napi", "Node.js"],
   },
   {
     label: "Languages",
     variant: "secondary",
-    skills: ["Rust", "Java", "Python", "JavaScript"],
+    skills: ["Rust", "Napi-rs", "JavaScript"],
   },
   {
     label: "Backend",
@@ -17,6 +17,11 @@ export const skillGroups = [
   {
     label: "Data",
     variant: "secondary",
-    skills: ["TiKV", "Elasticsearch", "MongoDB", "SQL", "Redis"],
+    skills: ["TiKV", "Elasticsearch", "MongoDB", "SQL", "Kafka"],
   },
+  {
+    label: "AI/ML",
+    variant: "secondary",
+    skills: ["Hugging Face", "Pinecone", "Vectorize-data"],
+  }
 ]

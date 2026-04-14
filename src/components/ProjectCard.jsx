@@ -1,4 +1,5 @@
-import { ExternalLink, Github } from "lucide-react"
+import { ExternalLink } from "lucide-react"
+import { FaGithub } from "react-icons/fa6"
 import { Button } from "@/components/ui/button"
 
 export default function ProjectCard({ project }) {
@@ -49,9 +50,9 @@ export default function ProjectCard({ project }) {
             </Button>
           )}
           {repoUrl && (
-            <Button size="sm" asChild className="flex-1 bg-transparent hover:bg-white/5 text-white/70 border border-white/10 rounded-xl">
-              <a href={repoUrl} target="_blank" rel="noopener noreferrer">
-                <Github size={14} />
+            <Button size="sm" asChild className="flex-1 bg-transparent hover:bg-white/5 text-white/70 border border-white/10 rounded-xl transition-all duration-300 hover:text-white hover:border-white/30 group/btn">
+              <a href={repoUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                <FaGithub size={15} className="group-hover/btn:scale-110 transition-transform" />
                 Source
               </a>
             </Button>
