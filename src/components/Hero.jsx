@@ -5,12 +5,11 @@ import { Button } from "@/components/ui/button"
 import { useScrollTo } from "@/hooks/useLenis"
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: 34 },
   visible: { 
     opacity: 1, 
     y: 0, 
-    filter: "blur(0px)",
-    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } 
+    transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] } 
   },
 }
 
@@ -114,7 +113,7 @@ export default function Hero() {
               asChild
               className="rounded-full glass-panel hover:bg-white/10"
             >
-              <a href="/assets/resume/Dhvani_Bhesaniya.pdf" download>
+              <a href={`${import.meta.env.BASE_URL}assets/resume/Dhvani_Bhesaniya.pdf`} download>
                 <Download size={16} />
                 Download Resume
               </a>
@@ -146,8 +145,8 @@ export default function Hero() {
 
         {/* RIGHT COLUMN — Photo */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="flex items-center justify-center relative"
         >
@@ -162,7 +161,7 @@ export default function Hero() {
             
             {/* The photo itself */}
             <img
-              src="/images/img.jpg"
+              src={`${import.meta.env.BASE_URL}images/img.jpg`}
               alt="Dhvani Bhesaniya"
               className="w-full h-full rounded-full object-cover border border-white/20 shadow-2xl glass-panel relative z-10 p-1"
             />

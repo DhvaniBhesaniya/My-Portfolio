@@ -17,9 +17,9 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -68,6 +68,7 @@ body {
 
 .glass-panel-hover {
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 .glass-panel-hover:hover {
   background: rgba(255, 255, 255, 0.06);
@@ -97,6 +98,11 @@ body {
 .aurora-orb-1 { animation: aurora-float-1 20s ease-in-out infinite; }
 .aurora-orb-2 { animation: aurora-float-2 25s ease-in-out infinite; }
 .aurora-orb-3 { animation: aurora-float-3 18s ease-in-out infinite; }
+.aurora-orb-1,
+.aurora-orb-2,
+.aurora-orb-3 {
+  will-change: transform;
+}
 
 /* ===== SOFTENED ORBITAL ANIMATIONS (SKILLS) ===== */
 @keyframes orbit-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -110,6 +116,40 @@ body {
 .counter-rotate-icon { animation: counter-rotate 20s linear infinite; }
 .counter-rotate-icon-2 { animation: counter-rotate 30s linear infinite; }
 .counter-rotate-icon-3 { animation: counter-rotate 40s linear infinite; }
+
+/* 3D Orbit Scene */
+.orbit-scene {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.orbit-core {
+  transform: translateZ(28px);
+}
+
+.orbit-plane {
+  transform-style: preserve-3d;
+  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.04);
+  will-change: transform;
+}
+
+.orbit-plane-1 {
+  transform: rotateX(72deg) rotateZ(8deg) translateZ(22px);
+}
+
+.orbit-plane-2 {
+  transform: rotateX(70deg) rotateZ(-10deg) translateZ(0px);
+}
+
+.orbit-plane-3 {
+  transform: rotateX(68deg) rotateZ(14deg) translateZ(-18px);
+}
+
+.orbit-planet {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
 
 /* ===== HERO & GENERAL ELEGANT ANIMATIONS ===== */
 @keyframes hero-aurora-pulse {
@@ -171,4 +211,28 @@ body {
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
+}
+
+.loading-bubble {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  background: radial-gradient(circle at 30% 25%, rgba(186, 230, 253, 0.3), rgba(14, 116, 144, 0.1));
+  box-shadow: inset 0 0 25px rgba(125, 211, 252, 0.2), 0 8px 24px rgba(14, 165, 233, 0.12);
+}
+
+main > section {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

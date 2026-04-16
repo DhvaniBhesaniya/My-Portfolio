@@ -9,8 +9,8 @@ const templateID = "template_kfi7w35"
 const publicKey = "_4EsRjANtwBBAVH8X"
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 50, filter: "blur(5px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 36 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
 }
 
 const staggerContainer = {
@@ -129,8 +129,8 @@ export default function Contact() {
 
           {/* Right — Form */}
           <motion.div
-            initial={{ opacity: 0, x: 40, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           >

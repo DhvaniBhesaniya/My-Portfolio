@@ -2,8 +2,8 @@ import { motion } from "motion/react"
 import { Code, GraduationCap, FolderOpen } from "lucide-react"
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 50, filter: "blur(5px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 36 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
 }
 
 const staggerContainer = {
@@ -52,15 +52,15 @@ export default function About() {
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
           {/* Photo */}
           <motion.div
-            initial={{ opacity: 0, x: -40, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="flex justify-center"
           >
             <div className="relative p-2 glass-panel rounded-3xl rotate-[-2deg] hover:rotate-0 transition-transform duration-500 max-w-md w-full">
               <img
-                src="/images/img2.jpg"
+                src={`${import.meta.env.BASE_URL}images/img2.jpg`}
                 alt="Dhvani Bhesaniya"
                 className="w-full rounded-2xl object-cover shadow-2xl"
               />

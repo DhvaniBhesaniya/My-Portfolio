@@ -3,8 +3,8 @@ import { Code } from "lucide-react"
 import { skillGroups } from "@/data/skills"
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 50, filter: "blur(5px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 36 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
 }
 
 const staggerContainer = {
@@ -33,7 +33,7 @@ function OrbitPlanet({ label, color, bg, style, counterClass }) {
   return (
     <div className="absolute" style={style}>
       <span
-        className={`glass-panel ${counterClass} flex items-center justify-center w-11 h-11 rounded-full text-[10px] font-semibold`}
+        className={`glass-panel orbit-planet ${counterClass} flex items-center justify-center w-11 h-11 rounded-full text-[10px] font-semibold`}
         style={{ color, boxShadow: `0 4px 20px ${bg}` }}
       >
         {label}
@@ -64,23 +64,23 @@ export default function Skills() {
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           {/* LEFT: Solar system */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            initial={{ opacity: 0, scale: 0.88 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center justify-center"
           >
-            <div className="relative w-80 h-80">
+            <div className="relative w-80 h-80 orbit-scene">
               {/* Center sun */}
               <div className="absolute inset-0 flex items-center justify-center z-10">
-                <div className="w-20 h-20 rounded-full glass-panel flex items-center justify-center shadow-[0_0_40px_rgba(20,184,166,0.3)]">
+                <div className="w-20 h-20 rounded-full glass-panel flex items-center justify-center shadow-[0_0_45px_rgba(20,184,166,0.35)] orbit-core">
                   <Code className="w-8 h-8 text-white/80" strokeWidth={1.5} />
                 </div>
               </div>
 
               {/* Orbit 1 */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-32 h-32 rounded-full border border-dashed border-white/10 orbit-ring-1">
+                <div className="relative w-32 h-32 rounded-full border border-dashed border-white/10 orbit-ring-1 orbit-plane orbit-plane-1">
                   {orbit1.map((p, i) => (
                     <OrbitPlanet
                       key={p.label}
@@ -98,7 +98,7 @@ export default function Skills() {
 
               {/* Orbit 2 */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-56 h-56 rounded-full border border-dashed border-white/10 orbit-ring-2">
+                <div className="relative w-56 h-56 rounded-full border border-dashed border-white/10 orbit-ring-2 orbit-plane orbit-plane-2">
                   {orbit2.map((p, i) => (
                     <OrbitPlanet
                       key={p.label}
@@ -116,7 +116,7 @@ export default function Skills() {
 
               {/* Orbit 3 */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-[300px] h-[300px] rounded-full border border-dashed border-white/10 orbit-ring-3">
+                <div className="relative w-[300px] h-[300px] rounded-full border border-dashed border-white/10 orbit-ring-3 orbit-plane orbit-plane-3">
                   {orbit3.map((p, i) => (
                     <OrbitPlanet
                       key={p.label}

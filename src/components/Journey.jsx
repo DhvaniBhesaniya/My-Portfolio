@@ -2,8 +2,8 @@ import { motion } from "motion/react"
 import { MapPin, Mail, BookOpen, Briefcase, Code2 } from "lucide-react"
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 50, filter: "blur(5px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 36 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
 }
 
 const staggerContainer = {

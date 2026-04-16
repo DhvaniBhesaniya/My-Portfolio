@@ -23,8 +23,17 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY)
+    let ticking = false
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        setScrollY(window.scrollY)
+        ticking = false
+      })
+    }
     window.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
@@ -42,9 +51,9 @@ export default function App() {
           >
             {/* Global Aurora Background */}
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-              <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-teal-500/10 blur-[120px] mix-blend-screen aurora-orb-1" />
-              <div className="absolute top-[40%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-violet-500/10 blur-[130px] mix-blend-screen aurora-orb-2" />
-              <div className="absolute bottom-[-10%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-emerald-500/10 blur-[120px] mix-blend-screen aurora-orb-3" />
+              <div className="absolute top-[-10%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-teal-500/10 blur-[100px] mix-blend-screen aurora-orb-1" />
+              <div className="absolute top-[40%] right-[-10%] w-[52vw] h-[52vw] rounded-full bg-violet-500/10 blur-[105px] mix-blend-screen aurora-orb-2" />
+              <div className="absolute bottom-[-10%] left-[20%] w-[45vw] h-[45vw] rounded-full bg-emerald-500/10 blur-[100px] mix-blend-screen aurora-orb-3" />
             </div>
 
             <Navbar />
