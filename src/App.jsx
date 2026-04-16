@@ -1,24 +1,32 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, lazy, Suspense } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { ChevronUp } from "lucide-react"
 
 import LoadingScreen from "./components/LoadingScreen"
 import Navbar from "./components/Navbar"
 import Hero from "./components/Hero"
-import About from "./components/About"
-import Skills from "./components/Skills"
-import Journey from "./components/Journey"
-import Projects from "./components/Projects"
-import Services from "./components/Services"
-import Contact from "./components/Contact"
-import Footer from "./components/Footer"
+const About = lazy(() => import("./components/About"))
+const Skills = lazy(() => import("./components/Skills"))
+const Journey = lazy(() => import("./components/Journey"))
+const Projects = lazy(() => import("./components/Projects"))
+const Services = lazy(() => import("./components/Services"))
+const Contact = lazy(() => import("./components/Contact"))
+const Footer = lazy(() => import("./components/Footer"))
+const SmoothCursor = lazy(() =>
+  import("./components/magicui/smooth-cursor").then((module) => ({
+    default: module.SmoothCursor,
+  }))
+)
+function SectionFallback() {
+  return <div className="py-20" aria-hidden="true" />
+}
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [scrollY, setScrollY] = useState(0)
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 4000)
+    const timer = setTimeout(() => setIsLoading(false), 2200)
     return () => clearTimeout(timer)
   }, [])
 
@@ -40,6 +48,9 @@ export default function App() {
   return (
     <>
       <LoadingScreen isLoading={isLoading} />
+      <Suspense fallback={null}>
+        <SmoothCursor />
+      </Suspense>
 
       <AnimatePresence>
         {!isLoading && (
@@ -59,17 +70,37 @@ export default function App() {
             <Navbar />
             <main className="relative z-10">
               <Hero />
-              <About />
-              <Skills />
-              <Journey />
-              <Projects />
-              <Services />
-              <Contact />
+              <Suspense fallback={<SectionFallback />}>
+                <About />
+              </Suspense>
+              <Suspense fallback={<SectionFallback />}>
+                <Skills />
+              </Suspense>
+              <Suspense fallback={<SectionFallback />}>
+                <Journey />
+              </Suspense>
+              <Suspense fallback={<SectionFallback />}>
+                <Projects />
+              </Suspense>
+              <Suspense fallback={<SectionFallback />}>
+                <Services />
+              </Suspense>
+              <Suspense fallback={<SectionFallback />}>
+                <Contact />
+              </Suspense>
             </main>
-            <Footer />
+            <Suspense fallback={null}>
+              <Footer />
+            </Suspense>
 
             <motion.button
-              onClick={() => window.lenis?.scrollTo(0)}
+              onClick={() => {
+                if (window.lenis?.scrollTo) {
+                  window.lenis.scrollTo(0)
+                } else {
+                  window.scrollTo({ top: 0, behavior: "smooth" })
+                }
+              }}
               initial={{ opacity: 0 }}
               animate={{ opacity: scrollY > 500 ? 1 : 0 }}
               whileHover={{ scale: 1.15 }}
@@ -77,8 +108,9 @@ export default function App() {
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               id="back-to-top"
               aria-label="Back to top"
-              className="fixed bottom-8 right-6 w-12 h-12 rounded-full glass-panel text-white flex items-center justify-center z-50 hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer"
-              style={{ pointerEvents: scrollY > 500 ? "auto" : "none" }}
+              className={`fixed bottom-8 right-6 w-12 h-12 rounded-full glass-panel text-white flex items-center justify-center z-50 hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer ${
+                scrollY > 500 ? "pointer-events-auto" : "pointer-events-none"
+              }`}
             >
               <ChevronUp size={20} />
             </motion.button>

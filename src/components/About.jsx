@@ -1,5 +1,7 @@
 import { motion } from "motion/react"
 import { Code, GraduationCap, FolderOpen } from "lucide-react"
+import { BlurFade } from "@/components/magicui/blur-fade"
+import { NumberTicker } from "@/components/magicui/number-ticker"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -108,14 +110,18 @@ export default function About() {
           variants={staggerContainer}
           className="grid sm:grid-cols-3 gap-6"
         >
-          {driveCards.map(({ icon: Icon, title, value }) => (
+          {driveCards.map(({ icon: Icon, title, value }, index) => (
             <motion.div key={title} variants={fadeUp} className="h-full">
               <div className="glass-panel glass-panel-hover h-full text-center p-8 rounded-3xl flex flex-col items-center gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-2">
                   <Icon className="w-6 h-6 text-teal-400" strokeWidth={1.5} />
                 </div>
                 <p className="text-white/40 text-xs font-bold uppercase tracking-widest">{title}</p>
-                <p className="text-white/90 font-medium text-lg">{value}</p>
+                {index === 2 ? (
+                  <NumberTicker value={5} className="text-white/90 font-medium text-lg" />
+                ) : (
+                  <p className="text-white/90 font-medium text-lg">{value}</p>
+                )}
               </div>
             </motion.div>
           ))}

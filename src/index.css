@@ -151,18 +151,53 @@ body {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
 
-/* ===== HERO & GENERAL ELEGANT ANIMATIONS ===== */
-@keyframes hero-aurora-pulse {
+/* ===== HERO GLOW ANIMATION ===== */
+@keyframes hero-glow {
   0%, 100% {
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 0 40px var(--color-aurora-1);
+    box-shadow: 0 0 30px rgba(20, 184, 166, 0.3), 0 0 60px rgba(20, 184, 166, 0.1);
   }
   50% {
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 0 60px var(--color-aurora-2);
+    box-shadow: 0 0 40px rgba(20, 184, 166, 0.4), 0 0 80px rgba(139, 92, 246, 0.2);
   }
+}
+
+.hero-glow {
+  animation: hero-glow 5s ease-in-out infinite;
+}
+
+/* ===== PREMIUM GRADIENT TEXT ===== */
+.gradient-text-premium {
+  background: linear-gradient(135deg, #fff 0%, #14b8a6 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== CARD HOVER EFFECTS ===== */
+.card-lift {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(20, 184, 166, 0.1);
 }
 
 .hero-photo-ring {
   animation: hero-aurora-pulse 5s ease-in-out infinite;
+}
+
+/* ===== PREMIUM SECTION TRANSITIONS ===== */
+.section-premium {
+  position: relative;
+}
+.section-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.3), transparent);
 }
 
 @keyframes available-dot {

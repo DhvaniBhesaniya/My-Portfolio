@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "motion/react"
 import emailjs from "@emailjs/browser"
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react"
 import { FaGithub, FaLinkedin, FaFacebook, FaInstagram, FaMedium } from "react-icons/fa6"
+import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text"
+import ShimmerButton from "@/components/magicui/shimmer-button"
 
 const serviceID = "service_7580yj9"
 const templateID = "template_kfi7w35"
@@ -56,7 +58,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-32 px-6 relative z-10">
+    <section id="contact" className="py-32 px-6 relative z-10 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -73,7 +75,7 @@ export default function Contact() {
           </motion.h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left — Info */}
           <motion.div
             initial="hidden"
@@ -83,7 +85,9 @@ export default function Contact() {
             className="flex flex-col gap-10"
           >
             <motion.div variants={fadeUp}>
-              <h3 className="text-3xl font-medium text-white/90 mb-4 tracking-tight">Let's build something elegant.</h3>
+              <AnimatedShinyText className="text-3xl font-medium text-white/90 mb-4 tracking-tight">
+                Let's build something elegant.
+              </AnimatedShinyText>
               <p className="text-white/50 leading-relaxed text-base font-light">
                 I'm always open to discuss exciting projects, elegant solutions, and new opportunities. Drop a message or connect via socials.
               </p>
@@ -91,7 +95,7 @@ export default function Contact() {
 
             <motion.div variants={fadeUp} className="flex flex-col gap-6">
               {contactInfo.map(({ icon: Icon, label, value, href }) => (
-                <div key={label} className="flex items-center gap-6 glass-panel rounded-full p-3 pr-6 w-fit">
+                <div key={label} className="flex items-center gap-6 glass-panel rounded-full p-3 pr-6 w-full sm:w-fit">
                   <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 shadow-inner">
                     <Icon className="w-5 h-5 text-teal-400" strokeWidth={1.5} />
                   </div>
@@ -109,7 +113,7 @@ export default function Contact() {
               ))}
             </motion.div>
 
-            <motion.div variants={fadeUp} className="flex gap-4 pt-4">
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 pt-4">
               {socialLinks.map(({ icon: Icon, href, label, hoverColor }) => (
                 <motion.a
                   key={label}
@@ -180,18 +184,16 @@ export default function Contact() {
                 />
               </div>
 
-              <button
+              <ShimmerButton
                 id="contact-submit"
                 type="submit"
                 disabled={status === "sending"}
-                style={{
-                  ...(!(status === "success" || status === "error") ? { color: "var(--color-inverse, #09090b)" } : {})
-                }}
-                className={`mt-4 h-14 rounded-2xl font-medium text-sm transition-all duration-300 flex items-center justify-center gap-3 relative overflow-hidden ${status === "success"
-                  ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                  : status === "error"
-                    ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
-                    : "bg-white text-[#09090b] light:text-[#ffffff] hover:bg-white/90 shadow-xl shadow-white/5"
+                className={`mt-4 h-14 rounded-2xl font-medium text-sm transition-all duration-300 flex items-center justify-center gap-3 relative overflow-hidden ${
+                  status === "success"
+                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                    : status === "error"
+                      ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
+                      : "bg-teal-500 hover:bg-teal-400 text-white shadow-xl shadow-teal-500/20"
                   }`}
               >
                 <AnimatePresence mode="wait">
@@ -221,7 +223,7 @@ export default function Contact() {
                     </motion.span>
                   )}
                 </AnimatePresence>
-              </button>
+              </ShimmerButton>
             </form>
           </motion.div>
         </div>

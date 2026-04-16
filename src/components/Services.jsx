@@ -1,5 +1,5 @@
 import { motion } from "motion/react"
-import * as LucideIcons from "lucide-react"
+import { Server, Layers, Database, Plug, Star } from "lucide-react"
 import { services } from "@/data/services"
 
 const fadeUp = {
@@ -10,6 +10,12 @@ const fadeUp = {
 const staggerContainer = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.15 } },
+}
+const serviceIcons = {
+  Server,
+  Layers,
+  Database,
+  Plug,
 }
 
 export default function Services() {
@@ -39,7 +45,7 @@ export default function Services() {
           className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {services.map((service) => {
-            const Icon = LucideIcons[service.icon] || LucideIcons.Star
+            const Icon = serviceIcons[service.icon] || Star
             return (
               <motion.div key={service.id} variants={fadeUp} className="h-full">
                 <div className="glass-panel glass-panel-hover h-full rounded-3xl p-8 flex flex-col gap-6 cursor-default relative overflow-hidden group">

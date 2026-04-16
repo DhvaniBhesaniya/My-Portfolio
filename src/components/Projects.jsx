@@ -2,6 +2,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { projects } from "@/data/projects"
 import ProjectCard from "@/components/ProjectCard"
+import { Meteors } from "@/components/magicui/meteors"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -32,6 +33,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="py-32 px-6 relative z-10 w-full overflow-hidden">
+      <Meteors number={12} className="opacity-40" />
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
