@@ -6,8 +6,8 @@ import { useScrollTo } from "@/hooks/useLenis"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import Particles from "@/components/magicui/particles"
 import { DotPattern } from "@/components/magicui/dot-pattern"
-import { WordRotate } from "@/components/magicui/word-rotate"
-import { Meteors } from "@/components/magicui/meteors"
+import TypingAnimation from "@/components/magicui/typing-animation"
+
 
 const socialLinks = [
   { icon: FaGithub, href: "https://github.com/DhvaniBhesaniya", label: "GitHub", hoverColor: "hover:text-white" },
@@ -35,7 +35,7 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen flex items-center overflow-hidden pt-28 pb-12 md:pt-24"
     >
-      <Meteors number={24} className="opacity-45" />
+
       <Particles 
         quantity={140}
         color="#14b8a6" 
@@ -72,11 +72,10 @@ export default function Hero() {
                 Building the future with
               </span>
               <span className="block mt-2">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400">
-                  <WordRotate 
-                    words={["Rust & Elégance", "Backend Systems", "Full-Stack Apps"]} 
-                    duration={3000}
-                    className="inline"
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400 text-3xl sm:text-4xl md:text-5xl">
+                  <TypingAnimation 
+                    words={["Rust Developer", "Backend Systems", "Full-Stack Apps"]} 
+                    className="inline whitespace-nowrap"
                   />
                 </span>
               </span>
@@ -174,21 +173,7 @@ export default function Hero() {
               />
             </motion.div>
             
-            <motion.div
-              className="absolute -bottom-4 -right-4 glass-panel rounded-2xl p-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
-            >
-              <div className="text-xs text-white/40 uppercase tracking-wider mb-1">Primary Stack</div>
-              <div className="flex gap-2">
-                {["Rust", "Node", "React"].map((tech) => (
-                  <span key={tech} className="px-2 py-1 rounded-lg bg-white/10 text-white/80 text-xs">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
+           
           </div>
         </motion.div>
       </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from "react"
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { ChevronUp } from "lucide-react"
 
@@ -23,7 +23,8 @@ function SectionFallback() {
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
-  const [scrollY, setScrollY] = useState(0)
+  const [showBackToTop, setShowBackToTop] = useState(false)
+  const scrollYRef = useRef(0)
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 2200)
@@ -36,7 +37,9 @@ export default function App() {
       if (ticking) return
       ticking = true
       requestAnimationFrame(() => {
-        setScrollY(window.scrollY)
+        scrollYRef.current = window.scrollY
+        const shouldShow = window.scrollY > 500
+        setShowBackToTop((prev) => (prev !== shouldShow ? shouldShow : prev))
         ticking = false
       })
     }
@@ -102,14 +105,14 @@ export default function App() {
                 }
               }}
               initial={{ opacity: 0 }}
-              animate={{ opacity: scrollY > 500 ? 1 : 0 }}
+              animate={{ opacity: showBackToTop ? 1 : 0 }}
               whileHover={{ scale: 1.15 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               id="back-to-top"
               aria-label="Back to top"
               className={`fixed bottom-8 right-6 w-12 h-12 rounded-full glass-panel text-white flex items-center justify-center z-50 hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer ${
-                scrollY > 500 ? "pointer-events-auto" : "pointer-events-none"
+                showBackToTop ? "pointer-events-auto" : "pointer-events-none"
               }`}
             >
               <ChevronUp size={20} />

@@ -1,9 +1,8 @@
 import { lazy, Suspense } from "react"
 import { motion } from "motion/react"
-import { Code } from "lucide-react"
 import { skillGroups } from "@/data/skills"
 import { Marquee } from "@/components/magicui/marquee"
-import { Meteors } from "@/components/magicui/meteors"
+
 
 const IconCloud = lazy(() =>
   import("@/components/magicui/icon-cloud").then((module) => ({
@@ -47,7 +46,7 @@ const staggerContainer = {
 export default function Skills() {
   return (
     <section id="skills" className="py-32 px-6 relative z-10 overflow-hidden">
-      <Meteors number={10} className="opacity-40" />
+
       <div className="max-w-7xl mx-auto">
         {/* Marquee */}
         <div className="relative mb-20 overflow-hidden py-6">
@@ -90,11 +89,6 @@ export default function Skills() {
               <Suspense fallback={<IconCloudFallback />}>
                 <IconCloud className="mx-auto" images={iconCloudImages} />
               </Suspense>
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-20 h-20 rounded-full glass-panel flex items-center justify-center shadow-[0_0_45px_rgba(20,184,166,0.35)]">
-                  <Code className="w-8 h-8 text-white/80" strokeWidth={1.5} />
-                </div>
-              </div>
             </div>
           </motion.div>
 

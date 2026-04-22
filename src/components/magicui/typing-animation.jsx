@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useCallback } from "react"
 import { cn } from "@/lib/utils"
 
 export default function TypingAnimation({
@@ -9,36 +9,51 @@ export default function TypingAnimation({
   pauseDuration = 1800,
 }) {
   const [displayText, setDisplayText] = useState("")
-  const [wordIndex, setWordIndex] = useState(0)
-  const [isDeleting, setIsDeleting] = useState(false)
+  const stateRef = useRef({
+    wordIndex: 0,
+    charIndex: 0,
+    isDeleting: false,
+  })
   const timeoutRef = useRef(null)
 
   useEffect(() => {
     if (!words.length) return
-    const currentWord = words[wordIndex % words.length]
 
     const tick = () => {
+      const { wordIndex, charIndex, isDeleting } = stateRef.current
+      const currentWord = words[wordIndex % words.length]
+
       if (!isDeleting) {
-        if (displayText.length < currentWord.length) {
-          setDisplayText(currentWord.slice(0, displayText.length + 1))
+        if (charIndex < currentWord.length) {
+          const nextIndex = charIndex + 1
+          stateRef.current.charIndex = nextIndex
+          setDisplayText(currentWord.slice(0, nextIndex))
           timeoutRef.current = setTimeout(tick, typingSpeed)
         } else {
-          timeoutRef.current = setTimeout(() => setIsDeleting(true), pauseDuration)
+          // Pause at end of word, then start deleting
+          timeoutRef.current = setTimeout(() => {
+            stateRef.current.isDeleting = true
+            tick()
+          }, pauseDuration)
         }
       } else {
-        if (displayText.length > 0) {
-          setDisplayText(displayText.slice(0, -1))
+        if (charIndex > 0) {
+          const nextIndex = charIndex - 1
+          stateRef.current.charIndex = nextIndex
+          setDisplayText(currentWord.slice(0, nextIndex))
           timeoutRef.current = setTimeout(tick, deletingSpeed)
         } else {
-          setIsDeleting(false)
-          setWordIndex((i) => (i + 1) % words.length)
+          // Move to next word
+          stateRef.current.isDeleting = false
+          stateRef.current.wordIndex = (wordIndex + 1) % words.length
+          timeoutRef.current = setTimeout(tick, typingSpeed)
         }
       }
     }
 
-    timeoutRef.current = setTimeout(tick, isDeleting ? deletingSpeed : typingSpeed)
+    timeoutRef.current = setTimeout(tick, typingSpeed)
     return () => clearTimeout(timeoutRef.current)
-  }, [displayText, isDeleting, wordIndex, words, typingSpeed, deletingSpeed, pauseDuration])
+  }, [words, typingSpeed, deletingSpeed, pauseDuration])
 
   return (
     <span className={cn("inline-block", className)}>

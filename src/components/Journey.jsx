@@ -2,7 +2,7 @@ import { motion } from "motion/react"
 import { MapPin, BookOpen, Briefcase, Code2, Award, Zap } from "lucide-react"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import { NumberTicker } from "@/components/magicui/number-ticker"
-import { Meteors } from "@/components/magicui/meteors"
+
 
 const timelineItems = [
   {
@@ -55,7 +55,7 @@ const colorMap = {
 export default function Journey() {
   return (
     <section id="journey" className="py-32 px-6 relative z-10 overflow-hidden">
-      <Meteors number={15} className="opacity-50" />
+
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial="hidden"

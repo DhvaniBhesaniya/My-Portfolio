@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from "react"
+import { useRef, useEffect, useState, useMemo, useCallback } from "react"
 import { motion, useMotionValue, useSpring } from "motion/react"
 import { cn } from "@/lib/utils"
 const FALLBACK_ICON = "https://cdn.simpleicons.org/react/61dafb"
@@ -15,43 +15,59 @@ export function IconCloud({
   const springConfig = { damping: 45, stiffness: 320, mass: 1.15 }
   const springX = useSpring(mouseX, springConfig)
   const springY = useSpring(mouseY, springConfig)
-  const [items, setItems] = useState([])
 
-  useEffect(() => {
-    const target = images.length > 0 ? images : icons
-    if (!target.length) {
-      setItems([])
-      return
-    }
-    const generatedItems = target.map((item, i) => {
-      const angle = (i / target.length) * Math.PI * 2
-      const ringOffset = [0, 16, 32][i % 3]
-      const radius = 84 + ringOffset
-      const depth = ((i % 5) - 2) * 12
+  // Stabilize the array references — only recompute when the actual content changes
+  const stableImages = useMemo(() => images, [JSON.stringify(images)])
+  const stableIcons = useMemo(() => icons, [JSON.stringify(icons)])
+
+  const items = useMemo(() => {
+    const target = stableImages.length > 0 ? stableImages : stableIcons
+    if (!target.length) return []
+    return target.map((item, i) => {
+      const phi = Math.acos(-1 + (2 * i) / target.length)
+      const theta = Math.sqrt(target.length * Math.PI) * phi
+      const radius = 110
       return {
-        x: Math.cos(angle) * radius,
-        y: Math.sin(angle) * radius,
-        z: depth,
+        x: radius * Math.sin(phi) * Math.cos(theta),
+        y: radius * Math.sin(phi) * Math.sin(theta),
+        z: radius * Math.cos(phi),
         item,
       }
     })
-    setItems(generatedItems)
-  }, [images, icons])
+  }, [stableImages, stableIcons])
+
+  const autoRotateX = useRef(0)
+  const [isHovering, setIsHovering] = useState(false)
+
+  useEffect(() => {
+    let animationFrameId
+    const animate = () => {
+      autoRotateX.current -= 0.5 // Base rotation speed
+      if (!isHovering) {
+        mouseX.set(autoRotateX.current)
+        mouseY.set(0)
+      }
+      animationFrameId = requestAnimationFrame(animate)
+    }
+    animate()
+    return () => cancelAnimationFrame(animationFrameId)
+  }, [isHovering, mouseX, mouseY])
 
   const handleMouseMove = useCallback((e) => {
+    setIsHovering(true)
     if (!containerRef.current) return
     const rect = containerRef.current.getBoundingClientRect()
     const x = e.clientX - rect.left - rect.width / 2
     const y = e.clientY - rect.top - rect.height / 2
-    mouseX.set(x / 14)
-    mouseY.set(y / 14)
+    mouseX.set(autoRotateX.current + x / 4)
+    mouseY.set(-y / 4)
   }, [mouseX, mouseY])
 
   return (
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      onMouseLeave={() => { mouseX.set(0); mouseY.set(0) }}
+      onMouseLeave={() => setIsHovering(false)}
       className={cn(
         "relative flex items-center justify-center w-full max-w-[22rem] aspect-square cursor-default",
         className
@@ -59,7 +75,7 @@ export function IconCloud({
       style={{ perspective: "1000px" }}
     >
       <motion.div
-        style={{ x: springX, y: springY }}
+        style={{ rotateY: springX, rotateX: springY }}
         className="relative w-full h-full [transform-style:preserve-3d]"
       >
         {items.map(({ x, y, z, item }, i) => (
@@ -99,7 +115,7 @@ export function IconCloud({
             )}
           </motion.div>
         ))}
-        {icons.length > 0 && images.length === 0 && (
+        {stableIcons.length > 0 && stableImages.length === 0 && (
           <div className="sr-only">Icon cloud</div>
         )}
       </motion.div>
