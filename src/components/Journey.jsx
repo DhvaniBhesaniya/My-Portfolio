@@ -153,7 +153,7 @@ export default function Journey() {
           >
             <div className="glass-panel rounded-2xl p-6 text-center">
               <Code2 className="w-8 h-8 text-teal-400 mx-auto mb-3" strokeWidth={1.5} />
-              <NumberTicker value={5} className="text-3xl font-bold text-white" />
+              <NumberTicker value={10} className="text-3xl font-bold text-white" />
               <p className="text-white/40 text-sm mt-1">Major Projects</p>
             </div>
             <div className="glass-panel rounded-2xl p-6 text-center">
@@ -163,7 +163,7 @@ export default function Journey() {
             </div>
             <div className="glass-panel rounded-2xl p-6 text-center">
               <Zap className="w-8 h-8 text-amber-400 mx-auto mb-3" strokeWidth={1.5} />
-              <NumberTicker value={1} className="text-3xl font-bold text-white" />
+              <NumberTicker value={2.5} className="text-3xl font-bold text-white" />
               <p className="text-white/40 text-sm mt-1">Years Experience</p>
             </div>
           </motion.div>

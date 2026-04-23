@@ -7,7 +7,7 @@ export function IconCloud({
   images = [],
   icons = [],
   className,
-  iconSize = 44,
+  iconSize = 48,
 }) {
   const containerRef = useRef(null)
   const mouseX = useMotionValue(0)
@@ -81,6 +81,9 @@ export function IconCloud({
         {items.map(({ x, y, z, item }, i) => (
           <motion.div
             key={`${typeof item === "string" ? item : "icon"}-${i}`}
+            whileHover={{ scale: 1.15, z: z + 15 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-center justify-center rounded-full border border-white/15 backdrop-blur-md"
             style={{
               position: "absolute",
               left: "50%",
@@ -92,15 +95,14 @@ export function IconCloud({
               marginTop: -(iconSize / 2),
               width: `${iconSize}px`,
               height: `${iconSize}px`,
+              background: "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.12), rgba(255,255,255,0.03) 50%, rgba(0,0,0,0.15) 100%)",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.15), inset 0 -2px 4px rgba(0,0,0,0.2), 0 2px 8px rgba(20,184,166,0.08)",
             }}
-            whileHover={{ scale: 1.1, z: z + 10 }}
-            transition={{ duration: 0.2 }}
-            className="flex items-center justify-center rounded-full bg-white/5 border border-white/10 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.3)]"
           >
             {typeof item === "string" ? (
               <img
                 src={item}
-                className="w-6 h-6 object-contain"
+                className="w-7 h-7 object-contain drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
                 alt="Technology icon"
                 loading="lazy"
                 decoding="async"

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
+import { ChevronDown, ChevronUp } from "lucide-react"
 import { projects } from "@/data/projects"
 import ProjectCard from "@/components/ProjectCard"
 
@@ -23,13 +24,19 @@ const filters = [
   { label: "API", value: "api" },
 ]
 
+const VISIBLE_COUNT = 8
+
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState("all")
+  const [showAll, setShowAll] = useState(false)
 
   const filtered =
     activeFilter === "all"
       ? projects
       : projects.filter((p) => p.category.includes(activeFilter))
+
+  const visibleProjects = showAll ? filtered : filtered.slice(0, VISIBLE_COUNT)
+  const hasMore = filtered.length > VISIBLE_COUNT
 
   return (
     <section id="projects" className="py-32 px-6 relative z-10 w-full overflow-hidden">
@@ -58,13 +65,16 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-wrap justify-center gap-3 mb-16"
+          className="flex flex-wrap justify-center gap-3 mb-12"
         >
           {filters.map(({ label, value }) => (
             <button
               key={value}
               id={`filter-${value}`}
-              onClick={() => setActiveFilter(value)}
+              onClick={() => {
+                setActiveFilter(value)
+                setShowAll(false)
+              }}
               className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer relative overflow-hidden ${
                 activeFilter === value
                   ? "text-teal-900 shadow-lg shadow-teal-500/20"
@@ -84,13 +94,13 @@ export default function Projects() {
           ))}
         </motion.div>
 
-        {/* Projects grid */}
+        {/* Projects grid — 4 columns on xl, 3 on lg, 2 on md */}
         <motion.div
           layout
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
         >
           <AnimatePresence mode="popLayout">
-            {filtered.map((project) => (
+            {visibleProjects.map((project) => (
               <motion.div
                 key={project.id}
                 layout
@@ -100,11 +110,38 @@ export default function Projects() {
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 className="h-full"
               >
-                <ProjectCard project={project} />
+                <ProjectCard project={project} compact />
               </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* Show More / Show Less */}
+        {hasMore && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex justify-center mt-12"
+          >
+            <button
+              id="show-more-projects"
+              onClick={() => setShowAll(!showAll)}
+              className="group flex items-center gap-2 px-8 py-3 rounded-full glass-panel text-white/60 hover:text-white hover:bg-white/10 text-sm font-medium transition-all duration-300 cursor-pointer"
+            >
+              {showAll ? (
+                <>
+                  Show Less
+                  <ChevronUp size={16} className="group-hover:-translate-y-0.5 transition-transform" />
+                </>
+              ) : (
+                <>
+                  Show More ({filtered.length - VISIBLE_COUNT} more)
+                  <ChevronDown size={16} className="group-hover:translate-y-0.5 transition-transform" />
+                </>
+              )}
+            </button>
+          </motion.div>
+        )}
       </div>
     </section>
   )

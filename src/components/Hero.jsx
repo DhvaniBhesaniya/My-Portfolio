@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { useScrollTo } from "@/hooks/useLenis"
 import { BlurFade } from "@/components/magicui/blur-fade"
 import Particles from "@/components/magicui/particles"
-import { DotPattern } from "@/components/magicui/dot-pattern"
 import TypingAnimation from "@/components/magicui/typing-animation"
 
 
@@ -41,10 +40,6 @@ export default function Hero() {
         color="#14b8a6" 
         className="absolute inset-0 z-0 opacity-70"
         refresh={false}
-      />
-      <DotPattern 
-        className="absolute inset-0 z-0 opacity-50"
-        glow={true}
       />
       
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#09090B] z-0 pointer-events-none" />

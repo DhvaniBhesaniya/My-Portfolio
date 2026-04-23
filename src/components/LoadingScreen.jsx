@@ -295,7 +295,7 @@ export default function LoadingScreen({ isLoading }) {
 
             {/* Role subtitle */}
             <motion.p
-              className="text-[10px] sm:text-xs text-white/20 tracking-[0.25em] uppercase font-light"
+              className="text-[10px] sm:text-xs text-white/40 tracking-[0.25em] uppercase font-light"
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.4, duration: 0.4 }}

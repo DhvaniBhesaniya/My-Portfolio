@@ -22,12 +22,17 @@ function SectionFallback() {
 }
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true)
+  const hasLoadedBefore = sessionStorage.getItem("portfolio-loaded") === "true"
+  const [isLoading, setIsLoading] = useState(!hasLoadedBefore)
   const [showBackToTop, setShowBackToTop] = useState(false)
   const scrollYRef = useRef(0)
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 4000)
+    if (hasLoadedBefore) return
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+      sessionStorage.setItem("portfolio-loaded", "true")
+    }, 4000)
     return () => clearTimeout(timer)
   }, [])
 
