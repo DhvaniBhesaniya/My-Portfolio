@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "motion/react"
-import { Menu, X, Sun, Moon } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { useScrollTo } from "@/hooks/useLenis"
 import { useNavigate } from "react-router-dom"
+import { AnimatedThemeToggler } from "@/components/magicui/animated-theme-toggler"
 
 const navLinks = [
   { label: "Home", id: "home" },
@@ -142,24 +143,7 @@ export default function Navbar() {
 
         {/* Right: Theme toggle + hamburger */}
         <div className="flex items-center gap-2">
-          <button
-            onClick={toggleTheme}
-            id="theme-toggle"
-            className="w-10 h-10 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all cursor-pointer relative overflow-hidden"
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={theme}
-                initial={{ opacity: 0, rotate: -45, scale: 0.6 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={{ opacity: 0, rotate: 45, scale: 0.6 }}
-                transition={{ duration: 0.2 }}
-                className="inline-flex"
-              >
-                {theme === "dark" ? <Sun size={18} strokeWidth={1.5} /> : <Moon size={18} strokeWidth={1.5} />}
-              </motion.span>
-            </AnimatePresence>
-          </button>
+          <AnimatedThemeToggler theme={theme} onToggle={toggleTheme} />
 
           <button
             onClick={() => setMobileOpen((o) => !o)}

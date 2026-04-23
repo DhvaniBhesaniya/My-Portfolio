@@ -9,6 +9,7 @@
   --color-aurora-2: rgba(139, 92, 246, 0.15); /* Violet */
   --color-aurora-3: rgba(16, 185, 129, 0.15); /* Emerald */
   --color-inverse: #09090B;
+  --color-surface: #09090B;
 }
 
 /* ===== GLOBAL RESET & ELEGANCE ===== */
@@ -30,37 +31,239 @@ html {
 
 body {
   font-family: 'Montserrat', 'Open Sans', system-ui, sans-serif;
-  background-color: #09090B; /* Deep elegant slate/zinc */
+  background-color: var(--color-surface);
   color: #f4f4f5;
   overflow-x: hidden;
 }
 
-/* ===== LIGHT THEME (Softened) ===== */
+/* ===== VIEW TRANSITION API (Theme Toggle Animation) ===== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 999;
+}
+
+[data-theme="light"]::view-transition-old(root) {
+  z-index: 999;
+}
+
+[data-theme="light"]::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* ===== LIGHT THEME ===== */
+[data-theme="light"] {
+  --color-aurora-1: rgba(20, 184, 166, 0.1);
+  --color-aurora-2: rgba(139, 92, 246, 0.08);
+  --color-aurora-3: rgba(16, 185, 129, 0.08);
+  --color-inverse: #ffffff;
+  --color-surface: #F8FAFB;
+}
+
 [data-theme="light"] body {
-  background-color: #FAFAFB;
+  background-color: #F8FAFB;
   color: #18181B;
 }
 
-[data-theme="light"] {
-  --color-aurora-1: rgba(20, 184, 166, 0.2);
-  --color-aurora-2: rgba(139, 92, 246, 0.12);
-  --color-aurora-3: rgba(16, 185, 129, 0.15);
-  
-  /* OVERRIDE NATIVE TAILWIND COLORS FOR LIGHT MODE */
-  --color-white: #18181B;
-  --color-inverse: #ffffff;
-}
+/* --- Text color remaps --- */
+[data-theme="light"] .text-white { color: #0f172a !important; }
+[data-theme="light"] .text-white\/90 { color: #111827 !important; }
+[data-theme="light"] .text-white\/80 { color: #1f2937 !important; }
+[data-theme="light"] .text-white\/70 { color: #374151 !important; }
+[data-theme="light"] .text-white\/60 { color: #4b5563 !important; }
+[data-theme="light"] .text-white\/50 { color: #6b7280 !important; }
+[data-theme="light"] .text-white\/40 { color: #9ca3af !important; }
+[data-theme="light"] .text-white\/30,
+[data-theme="light"] .text-white\/20 { color: #9ca3af !important; }
+[data-theme="light"] .text-white\/10 { color: #d1d5db !important; }
 
+[data-theme="light"] .hover\:text-white:hover { color: #0f172a !important; }
+[data-theme="light"] .hover\:text-black:hover { color: #0f172a !important; }
+
+/* --- Background remaps --- */
+[data-theme="light"] .bg-white\/15 { background-color: rgba(15, 23, 42, 0.08) !important; }
+[data-theme="light"] .bg-white\/10 { background-color: rgba(15, 23, 42, 0.06) !important; }
+[data-theme="light"] .bg-white\/5 { background-color: rgba(15, 23, 42, 0.03) !important; }
+[data-theme="light"] .bg-black\/50 { background-color: rgba(15, 23, 42, 0.08) !important; }
+[data-theme="light"] .hover\:bg-white\/10:hover { background-color: rgba(15, 23, 42, 0.06) !important; }
+[data-theme="light"] .hover\:bg-white\/15:hover { background-color: rgba(15, 23, 42, 0.08) !important; }
+[data-theme="light"] .hover\:bg-white\/5:hover { background-color: rgba(15, 23, 42, 0.04) !important; }
+[data-theme="light"] .hover\:bg-white:hover { background-color: rgba(15, 23, 42, 0.04) !important; }
+
+/* --- Border remaps --- */
+[data-theme="light"] .border-white\/40 { border-color: rgba(15, 23, 42, 0.15) !important; }
+[data-theme="light"] .border-white\/30 { border-color: rgba(15, 23, 42, 0.12) !important; }
+[data-theme="light"] .border-white\/20 { border-color: rgba(15, 23, 42, 0.10) !important; }
+[data-theme="light"] .border-white\/15 { border-color: rgba(15, 23, 42, 0.08) !important; }
+[data-theme="light"] .border-white\/10 { border-color: rgba(15, 23, 42, 0.08) !important; }
+[data-theme="light"] .border-white\/5 { border-color: rgba(15, 23, 42, 0.05) !important; }
+[data-theme="light"] .hover\:border-white\/40:hover { border-color: rgba(15, 23, 42, 0.18) !important; }
+[data-theme="light"] .hover\:border-white\/30:hover { border-color: rgba(15, 23, 42, 0.12) !important; }
+[data-theme="light"] .hover\:border-white\/20:hover { border-color: rgba(15, 23, 42, 0.10) !important; }
+
+/* --- Gradient remaps --- */
+[data-theme="light"] .from-white { --tw-gradient-from: #0f172a var(--tw-gradient-from-position) !important; }
+[data-theme="light"] .via-white { --tw-gradient-via: #0f172a var(--tw-gradient-via-position) !important; }
+[data-theme="light"] .to-white\/60 { --tw-gradient-to: rgb(15 23 42 / 0.65) var(--tw-gradient-to-position) !important; }
+
+/* --- Hardcoded dark backgrounds → light --- */
+[data-theme="light"] .bg-\[\#09090B\] { background-color: #F8FAFB !important; }
+[data-theme="light"] .from-\[\#09090B\] { --tw-gradient-from: #F8FAFB var(--tw-gradient-from-position) !important; }
+[data-theme="light"] .via-\[\#09090B\]\/95 { --tw-gradient-via: rgba(248, 250, 251, 0.95) var(--tw-gradient-via-position) !important; }
+[data-theme="light"] .to-\[\#09090B\] { --tw-gradient-to: #F8FAFB var(--tw-gradient-to-position) !important; }
+
+/* --- Glass panel in light mode --- */
 [data-theme="light"] .glass-panel {
-  background: rgba(0, 0, 0, 0.03) !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04) !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04) !important;
 }
 
 [data-theme="light"] .glass-panel-hover:hover {
-  background: rgba(0, 0, 0, 0.06) !important;
-  border-color: rgba(0, 0, 0, 0.15) !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+}
+
+/* --- Shadow remaps for light mode --- */
+[data-theme="light"] .shadow-2xl {
+  box-shadow: 0 20px 40px -12px rgba(15, 23, 42, 0.10) !important;
+}
+[data-theme="light"] .shadow-xl {
+  box-shadow: 0 16px 30px -10px rgba(15, 23, 42, 0.08) !important;
+}
+[data-theme="light"] .shadow-lg {
+  box-shadow: 0 10px 24px -8px rgba(15, 23, 42, 0.07) !important;
+}
+[data-theme="light"] .shadow-md {
+  box-shadow: 0 6px 16px -6px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* --- Teal accent shadows for light mode --- */
+[data-theme="light"] .shadow-teal-500\/20 {
+  --tw-shadow-color: rgba(20, 184, 166, 0.12) !important;
+}
+[data-theme="light"] .shadow-teal-500\/30 {
+  --tw-shadow-color: rgba(20, 184, 166, 0.15) !important;
+}
+[data-theme="light"] .hover\:shadow-teal-500\/40:hover {
+  --tw-shadow-color: rgba(20, 184, 166, 0.20) !important;
+}
+
+/* --- Card lift in light mode --- */
+[data-theme="light"] .card-lift:hover {
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08), 0 0 12px rgba(20, 184, 166, 0.08) !important;
+}
+
+[data-theme="light"] .orbit-planet {
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* --- Fix form inputs in light mode --- */
+[data-theme="light"] input,
+[data-theme="light"] textarea {
+  background-color: rgba(15, 23, 42, 0.03) !important;
+  border-color: rgba(15, 23, 42, 0.10) !important;
+  color: #1f2937 !important;
+}
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #9ca3af !important;
+}
+[data-theme="light"] input:focus,
+[data-theme="light"] textarea:focus {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(20, 184, 166, 0.4) !important;
+}
+
+/* --- Fix footer in light mode --- */
+[data-theme="light"] footer {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border-color: rgba(15, 23, 42, 0.06) !important;
+}
+
+/* --- Fix aurora orbs in light mode --- */
+[data-theme="light"] .aurora-orb-1,
+[data-theme="light"] .aurora-orb-2,
+[data-theme="light"] .aurora-orb-3 {
+  opacity: 0.3;
+}
+
+/* --- Fix loading screen in light mode --- */
+[data-theme="light"] .loading-screen {
+  background: #F8FAFB !important;
+}
+
+/* --- Fix scrollbar in light mode --- */
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.15) !important;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.25) !important;
+}
+
+/* --- Fix icon cloud 3D bubbles in light mode --- */
+[data-theme="light"] .backdrop-blur-md {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* --- Fix gradient texts in light mode --- */
+[data-theme="light"] .bg-clip-text.from-white,
+[data-theme="light"] .bg-clip-text.via-white {
+  --tw-gradient-from: #1f2937 var(--tw-gradient-from-position) !important;
+  --tw-gradient-via: #1f2937 var(--tw-gradient-via-position) !important;
+}
+[data-theme="light"] .bg-clip-text.to-white\/60 {
+  --tw-gradient-to: rgba(31, 41, 55, 0.6) var(--tw-gradient-to-position) !important;
+}
+
+/* --- Hero glow: subtle in light mode --- */
+[data-theme="light"] .hero-glow {
+  animation: none !important;
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.15) !important;
+}
+
+/* --- Profile image border in light mode --- */
+[data-theme="light"] img.border-white\/20 {
+  border-color: rgba(15, 23, 42, 0.10) !important;
+}
+
+/* --- Particles: slightly more opaque in light mode --- */
+[data-theme="light"] canvas.opacity-70 {
+  opacity: 0.5 !important;
+}
+
+/* --- Fix hero section bottom gradient --- */
+[data-theme="light"] .from-transparent.via-transparent.to-\[\#09090B\] {
+  --tw-gradient-to: #F8FAFB var(--tw-gradient-to-position) !important;
+}
+
+/* --- Fix project card overlays --- */
+[data-theme="light"] .from-\[\#09090B\].via-\[\#09090B\]\/95.to-transparent {
+  --tw-gradient-from: rgba(248, 250, 251, 0.98) var(--tw-gradient-from-position) !important;
+  --tw-gradient-via: rgba(248, 250, 251, 0.92) var(--tw-gradient-via-position) !important;
+}
+
+/* --- Fix emerald status badge in light mode --- */
+[data-theme="light"] .bg-emerald-500\/10 {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+}
+[data-theme="light"] .border-emerald-500\/20 {
+  border-color: rgba(16, 185, 129, 0.2) !important;
+}
+
+/* --- Fix gradient premium text for light mode --- */
+[data-theme="light"] .gradient-text-premium {
+  background: linear-gradient(135deg, #1f2937 0%, #0f766e 50%, #7c3aed 100%) !important;
 }
 
 /* ===== GLASSMORPHIC UTILITIES ===== */

@@ -3,12 +3,27 @@ import { motion, useMotionValue, useSpring } from "motion/react"
 import { cn } from "@/lib/utils"
 const FALLBACK_ICON = "https://cdn.simpleicons.org/react/61dafb"
 
+function useTheme() {
+  const [theme, setTheme] = useState(() =>
+    document.documentElement.getAttribute("data-theme") || "dark"
+  )
+  useEffect(() => {
+    const obs = new MutationObserver(() => {
+      setTheme(document.documentElement.getAttribute("data-theme") || "dark")
+    })
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] })
+    return () => obs.disconnect()
+  }, [])
+  return theme
+}
+
 export function IconCloud({
   images = [],
   icons = [],
   className,
   iconSize = 48,
 }) {
+  const theme = useTheme()
   const containerRef = useRef(null)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
@@ -83,7 +98,11 @@ export function IconCloud({
             key={`${typeof item === "string" ? item : "icon"}-${i}`}
             whileHover={{ scale: 1.15, z: z + 15 }}
             transition={{ duration: 0.2 }}
-            className="flex items-center justify-center rounded-full border border-white/15 backdrop-blur-md"
+            className={`flex items-center justify-center rounded-full backdrop-blur-md ${
+              theme === "light"
+                ? "border border-slate-200/60 shadow-sm"
+                : "border border-white/15"
+            }`}
             style={{
               position: "absolute",
               left: "50%",
@@ -95,14 +114,20 @@ export function IconCloud({
               marginTop: -(iconSize / 2),
               width: `${iconSize}px`,
               height: `${iconSize}px`,
-              background: "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.12), rgba(255,255,255,0.03) 50%, rgba(0,0,0,0.15) 100%)",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.15), inset 0 -2px 4px rgba(0,0,0,0.2), 0 2px 8px rgba(20,184,166,0.08)",
+              background: theme === "light"
+                ? "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.9), rgba(255,255,255,0.6) 50%, rgba(200,210,220,0.4) 100%)"
+                : "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.12), rgba(255,255,255,0.03) 50%, rgba(0,0,0,0.15) 100%)",
+              boxShadow: theme === "light"
+                ? "0 4px 12px rgba(15,23,42,0.08), inset 0 1px 2px rgba(255,255,255,0.6), 0 1px 4px rgba(20,184,166,0.06)"
+                : "0 8px 24px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.15), inset 0 -2px 4px rgba(0,0,0,0.2), 0 2px 8px rgba(20,184,166,0.08)",
             }}
           >
             {typeof item === "string" ? (
               <img
                 src={item}
-                className="w-7 h-7 object-contain drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
+                className={`w-7 h-7 object-contain ${
+                  theme === "light" ? "drop-shadow-[0_1px_2px_rgba(15,23,42,0.1)]" : "drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
+                }`}
                 alt="Technology icon"
                 loading="lazy"
                 decoding="async"
