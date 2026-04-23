@@ -26,8 +26,8 @@ const driveCards = [
   },
   {
     icon: FolderOpen,
-    title: "Projects",
-    value: "5+ Major Projects",
+    title: "Open Source",
+    value: "10+ Projects",
   },
 ]
 
@@ -45,8 +45,8 @@ export default function About() {
         >
           <motion.span variants={fadeUp} className="section-label">Discover</motion.span>
           <motion.h2 variants={fadeUp} className="section-heading">
-            Building Meaningful <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-violet-400">Digital Experiences</span>
+            Crafting High-Performance <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-violet-400">Systems & Open Source</span>
           </motion.h2>
         </motion.div>
 
@@ -78,19 +78,20 @@ export default function About() {
             className="flex flex-col gap-6"
           >
             <motion.p variants={fadeUp} className="text-white/70 text-lg leading-relaxed font-light">
-              I'm a Web & Backend Developer passionate about building innovative and secure
-              backend solutions. My journey began with a strong foundation in IT Engineering
-              and evolved into a deep expertise in backend architecture, problem-solving, and
-              crafting elegant systems.
+              I'm a Rust developer and open-source contributor passionate about building 
+              high-performance, memory-safe systems. From financial ledgers to AI voice assistants, 
+              I architect solutions where every microsecond matters — leveraging Rust's zero-cost abstractions 
+              and fearless concurrency.
             </motion.p>
             <motion.p variants={fadeUp} className="text-white/70 text-lg leading-relaxed font-light">
-              When I'm not writing code, I enjoy exploring new technologies that push the boundaries 
-              of performance. I focus on finding better ways to make applications faster, more secure, 
-              and universally accessible.
+              I actively collaborate with AI tools and contribute to the open-source ecosystem, 
+              building developer utilities, distributed systems, and production-grade APIs. 
+              When I'm not shipping Rust crates, I explore the intersection of AI and systems programming 
+              to create tools that empower developers.
             </motion.p>
 
             <motion.div variants={fadeUp} className="flex flex-wrap gap-2 mt-4">
-              {["Rust", "Node.js", "React", "PostgreSQL", "Docker", "TiKV", "Elasticsearch"].map((tech) => (
+              {["Rust", "Axum", "Diesel ORM", "Node.js", "React", "PostgreSQL", "Docker", "LLM", "Tokio"].map((tech) => (
                 <span
                   key={tech}
                   className="glass-panel px-4 py-1.5 rounded-full text-xs font-medium tracking-wide text-white/80 border-white/5"
@@ -118,7 +119,7 @@ export default function About() {
                 </div>
                 <p className="text-white/40 text-xs font-bold uppercase tracking-widest">{title}</p>
                 {index === 2 ? (
-                  <NumberTicker value={5} className="text-white/90 font-medium text-lg" />
+                  <NumberTicker value={10} className="text-white/90 font-medium text-lg" />
                 ) : (
                   <p className="text-white/90 font-medium text-lg">{value}</p>
                 )}

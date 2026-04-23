@@ -74,7 +74,7 @@ export default function Hero() {
               <span className="block mt-2">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400 text-3xl sm:text-4xl md:text-5xl">
                   <TypingAnimation 
-                    words={["Rust Developer", "Backend Systems", "Full-Stack Apps"]} 
+                    words={["Rust Developer", "AI Enthusiast", "Open Source Contributor"]} 
                     className="inline whitespace-nowrap"
                   />
                 </span>
@@ -84,9 +84,9 @@ export default function Hero() {
 
           <BlurFade delay={0.3} inView>
             <p className="text-white/50 text-lg leading-relaxed max-w-xl font-light">
-              Senior backend engineer specializing in high-performance systems. 
-              I craft elegant solutions with Rust, Node.js, and modern architecture 
-              that scale to millions of users.
+              Systems engineer crafting high-performance solutions in Rust.
+              I build secure, scalable backend systems and collaborate with AI tools
+              to push the boundaries of distributed architecture and open-source software.
             </p>
           </BlurFade>
 

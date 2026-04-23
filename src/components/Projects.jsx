@@ -17,8 +17,8 @@ const staggerContainer = {
 const filters = [
   { label: "All", value: "all" },
   { label: "Rust", value: "rust" },
-  { label: "React", value: "react" },
   { label: "AI", value: "ai" },
+  { label: "React", value: "react" },
   { label: "Web", value: "web" },
   { label: "API", value: "api" },
 ]
@@ -48,7 +48,7 @@ export default function Projects() {
             Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-violet-400">Work</span>
           </motion.h2>
           <motion.p variants={fadeUp} className="text-white/50 mt-4 max-w-xl mx-auto text-base font-light">
-            A curated selection of my recent projects demonstrating expertise in full-stack architecture and backend systems.
+            From Rust systems to AI-powered applications — a curated showcase of open-source contributions and production-grade engineering.
           </motion.p>
         </motion.div>
 
