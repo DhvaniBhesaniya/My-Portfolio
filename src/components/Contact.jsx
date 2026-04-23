@@ -58,7 +58,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-32 px-6 relative z-10 overflow-hidden">
+    <section id="contact" className="py-20 sm:py-32 px-4 sm:px-6 relative z-10 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -66,7 +66,7 @@ export default function Contact() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-20"
         >
           <motion.span variants={fadeUp} className="section-label">Connect</motion.span>
           <motion.h2 variants={fadeUp} className="section-heading">
@@ -75,7 +75,7 @@ export default function Contact() {
           </motion.h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
           {/* Left — Info */}
           <motion.div
             initial="hidden"
@@ -85,17 +85,17 @@ export default function Contact() {
             className="flex flex-col gap-10"
           >
             <motion.div variants={fadeUp}>
-              <AnimatedShinyText className="text-3xl font-medium text-white/90 mb-4 tracking-tight">
+              <AnimatedShinyText className="text-xl sm:text-3xl font-medium text-white/90 mb-3 sm:mb-4 tracking-tight">
                 Let's build something elegant.
               </AnimatedShinyText>
-              <p className="text-white/50 leading-relaxed text-base font-light">
+              <p className="text-white/50 leading-relaxed text-sm sm:text-base font-light">
                 I'm always open to discuss exciting projects, elegant solutions, and new opportunities. Drop a message or connect via socials.
               </p>
             </motion.div>
 
             <motion.div variants={fadeUp} className="flex flex-col gap-6">
               {contactInfo.map(({ icon: Icon, label, value, href }) => (
-                <div key={label} className="flex items-center gap-6 glass-panel rounded-full p-3 pr-6 w-full sm:w-fit">
+                <div key={label} className="flex items-center gap-4 sm:gap-6 glass-panel rounded-2xl sm:rounded-full p-3 pr-5 sm:pr-6 w-full sm:w-fit">
                   <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 shadow-inner">
                     <Icon className="w-5 h-5 text-teal-400" strokeWidth={1.5} />
                   </div>
@@ -113,7 +113,7 @@ export default function Contact() {
               ))}
             </motion.div>
 
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 pt-4">
+            <motion.div variants={fadeUp} className="flex flex-wrap justify-center sm:justify-start gap-3 sm:gap-4 pt-4">
               {socialLinks.map(({ icon: Icon, href, label, hoverColor }) => (
                 <motion.a
                   key={label}
@@ -142,12 +142,12 @@ export default function Contact() {
               ref={formRef}
               onSubmit={handleSubmit}
               id="contact-form"
-              className="flex flex-col gap-6 glass-panel rounded-3xl p-8 md:p-10 shadow-2xl relative overflow-hidden"
+              className="flex flex-col gap-5 sm:gap-6 glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden"
             >
               {/* Subtle glare effect */}
               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-              <div className="grid sm:grid-cols-2 gap-6">
+              <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
                 <div className="flex flex-col gap-2">
                   <label className="text-white/50 text-[11px] font-semibold uppercase tracking-widest ml-1">Your Name</label>
                   <input

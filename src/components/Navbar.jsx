@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { Menu, X, Sun, Moon } from "lucide-react"
 import { useScrollTo } from "@/hooks/useLenis"
+import { useNavigate } from "react-router-dom"
 
 const navLinks = [
   { label: "Home", id: "home" },
@@ -19,6 +20,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark")
   const { scrollTo } = useScrollTo()
+  const navigate = useNavigate()
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme)
@@ -42,8 +44,11 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
-    const observers = []
-    navLinks.forEach(({ id }) => {
+    const sectionIds = navLinks.map((l) => l.id)
+    const observerMap = new Map()
+
+    const setupObserver = (id) => {
+      if (observerMap.has(id)) return // already observing
       const el = document.getElementById(id)
       if (!el) return
       const obs = new IntersectionObserver(
@@ -53,9 +58,22 @@ export default function Navbar() {
         { rootMargin: "-40% 0px -55% 0px" }
       )
       obs.observe(el)
-      observers.push(obs)
+      observerMap.set(id, obs)
+    }
+
+    // Observe any sections already in the DOM
+    sectionIds.forEach(setupObserver)
+
+    // Watch for lazy-loaded sections appearing in the DOM
+    const mutationObs = new MutationObserver(() => {
+      sectionIds.forEach(setupObserver)
     })
-    return () => observers.forEach((o) => o.disconnect())
+    mutationObs.observe(document.body, { childList: true, subtree: true })
+
+    return () => {
+      observerMap.forEach((obs) => obs.disconnect())
+      mutationObs.disconnect()
+    }
   }, [])
 
   const handleNavClick = (id) => {
@@ -112,6 +130,14 @@ export default function Navbar() {
               </button>
             </li>
           ))}
+          <li>
+            <button
+              onClick={() => { navigate("/blog"); setMobileOpen(false) }}
+              className="px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 cursor-pointer text-white/60 hover:text-white"
+            >
+              Blog
+            </button>
+          </li>
         </ul>
 
         {/* Right: Theme toggle + hamburger */}
@@ -168,6 +194,12 @@ export default function Navbar() {
                 {label}
               </button>
             ))}
+            <button
+              onClick={() => { navigate("/blog"); setMobileOpen(false) }}
+              className="text-left px-5 py-3.5 rounded-2xl text-sm font-medium transition-all cursor-pointer text-white/70 hover:text-white hover:bg-white/5"
+            >
+              Blog
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

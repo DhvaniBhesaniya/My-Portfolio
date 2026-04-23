@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import App from './App.jsx'
+import BlogPage from './components/BlogPage.jsx'
 import './index.css'
 import Lenis from 'lenis'
 
@@ -23,6 +25,11 @@ window.lenis = lenis
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/blog" element={<BlogPage />} />
+      </Routes>
+    </HashRouter>
   </React.StrictMode>
 )

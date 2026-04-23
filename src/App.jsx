@@ -27,7 +27,7 @@ export default function App() {
   const scrollYRef = useRef(0)
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2200)
+    const timer = setTimeout(() => setIsLoading(false), 4000)
     return () => clearTimeout(timer)
   }, [])
 
