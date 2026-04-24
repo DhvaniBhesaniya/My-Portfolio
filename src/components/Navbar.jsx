@@ -17,6 +17,7 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false)
   const [activeSection, setActiveSection] = useState("home")
   const [mobileOpen, setMobileOpen] = useState(false)
   const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark")
@@ -39,9 +40,16 @@ export default function Navbar() {
         ticking = false
       })
     }
+    
+    const onResize = () => setIsMobile(window.innerWidth < 768)
+    
     window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("resize", onResize)
     onScroll()
-    return () => window.removeEventListener("scroll", onScroll)
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("resize", onResize)
+    }
   }, [])
 
   useEffect(() => {
@@ -95,9 +103,11 @@ export default function Navbar() {
     >
       <nav 
         className={`flex items-center justify-between transition-all duration-500 w-full max-w-5xl ${
-          scrolled 
-            ? "glass-panel rounded-full px-6 py-2" 
-            : "bg-transparent px-2 py-2"
+          isMobile
+            ? "bg-[var(--color-surface)] border border-white/10 rounded-full px-6 py-2 shadow-xl shadow-black/20"
+            : scrolled 
+              ? "glass-panel rounded-full px-6 py-2" 
+              : "bg-transparent px-2 py-2"
         }`}
       >
         {/* Logo */}
@@ -163,7 +173,7 @@ export default function Navbar() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-full left-4 right-4 mt-2 md:hidden glass-panel rounded-3xl p-3 flex flex-col gap-1 shadow-2xl"
+            className="absolute top-full left-4 right-4 mt-2 md:hidden bg-[var(--color-surface)] border border-white/10 rounded-3xl p-3 flex flex-col gap-1 shadow-2xl shadow-black/40 z-50"
           >
             {navLinks.map(({ label, id }) => (
               <button
