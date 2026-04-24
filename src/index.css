@@ -43,20 +43,17 @@ body {
   mix-blend-mode: normal;
 }
 
+/* Scoped to AnimatedThemeToggler — the toggler sets the data-attribute and the variable only during a theme toggle. */
+html[data-magicui-theme-vt="active"]::view-transition-group(root) {
+  animation-duration: var(--magicui-theme-toggle-vt-duration);
+}
+
 ::view-transition-old(root) {
   z-index: 1;
 }
 
 ::view-transition-new(root) {
   z-index: 999;
-}
-
-[data-theme="light"]::view-transition-old(root) {
-  z-index: 999;
-}
-
-[data-theme="light"]::view-transition-new(root) {
-  z-index: 1;
 }
 
 /* ===== LIGHT THEME ===== */

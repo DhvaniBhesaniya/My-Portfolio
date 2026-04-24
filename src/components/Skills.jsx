@@ -49,9 +49,13 @@ export default function Skills() {
 
       <div className="max-w-7xl mx-auto">
         {/* Marquee */}
-        <div className="relative mb-20 overflow-hidden py-6">
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[var(--color-inverse)] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[var(--color-inverse)] to-transparent z-10 pointer-events-none" />
+        <div 
+          className="relative mb-20 overflow-hidden py-6"
+          style={{ 
+            maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)", 
+            WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)"
+          }}
+        >
           <Marquee pauseOnHover className="[--duration:25s]">
             {["Rust", "Axum", "Tokio", "Node.js", "React", "PostgreSQL", "Docker", "TiKV", "MongoDB", "Elasticsearch", "AWS", "Git"].map((tech) => (
               <span key={tech} className="mx-6 glass-panel px-6 py-3 rounded-full text-sm font-medium text-white/80 whitespace-nowrap">

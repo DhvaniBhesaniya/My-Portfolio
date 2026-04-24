@@ -1,121 +1,204 @@
 import { useRef, useCallback } from "react"
 import { motion } from "motion/react"
 import { Moon, Sun } from "lucide-react"
+import { flushSync } from "react-dom"
 
-const CLIP_PATHS = {
-  circle: (r) => `circle(${r}px at var(--x) var(--y))`,
+function polygonCollapsed(cx, cy, vertexCount) {
+  const pairs = Array.from(
+    { length: vertexCount },
+    () => `${cx}px ${cy}px`
+  ).join(", ")
+  return `polygon(${pairs})`
 }
 
-export function AnimatedThemeToggler({
+function getThemeTransitionClipPaths(
+  variant,
+  cx,
+  cy,
+  maxRadius,
+  viewportWidth,
+  viewportHeight
+) {
+  switch (variant) {
+    case "square": {
+      const halfW = Math.max(cx, viewportWidth - cx)
+      const halfH = Math.max(cy, viewportHeight - cy)
+      const halfSide = Math.max(halfW, halfH) * 1.05
+      const end = [
+        `${cx - halfSide}px ${cy - halfSide}px`,
+        `${cx + halfSide}px ${cy - halfSide}px`,
+        `${cx + halfSide}px ${cy + halfSide}px`,
+        `${cx - halfSide}px ${cy + halfSide}px`,
+      ].join(", ")
+      return [polygonCollapsed(cx, cy, 4), `polygon(${end})`]
+    }
+    case "triangle": {
+      const scale = maxRadius * 2.2
+      const dx = (Math.sqrt(3) / 2) * scale
+      const verts = [
+        `${cx}px ${cy - scale}px`,
+        `${cx + dx}px ${cy + 0.5 * scale}px`,
+        `${cx - dx}px ${cy + 0.5 * scale}px`,
+      ].join(", ")
+      return [polygonCollapsed(cx, cy, 3), `polygon(${verts})`]
+    }
+    case "diamond": {
+      const R = maxRadius * Math.SQRT2
+      const end = [
+        `${cx}px ${cy - R}px`,
+        `${cx + R}px ${cy}px`,
+        `${cx}px ${cy + R}px`,
+        `${cx - R}px ${cy}px`,
+      ].join(", ")
+      return [polygonCollapsed(cx, cy, 4), `polygon(${end})`]
+    }
+    case "hexagon": {
+      const R = maxRadius * Math.SQRT2
+      const verts = []
+      for (let i = 0; i < 6; i++) {
+        const a = -Math.PI / 2 + (i * Math.PI) / 3
+        verts.push(`${cx + R * Math.cos(a)}px ${cy + R * Math.sin(a)}px`)
+      }
+      return [polygonCollapsed(cx, cy, 6), `polygon(${verts.join(", ")})`]
+    }
+    case "rectangle": {
+      const halfW = Math.max(cx, viewportWidth - cx)
+      const halfH = Math.max(cy, viewportHeight - cy)
+      const end = [
+        `${cx - halfW}px ${cy - halfH}px`,
+        `${cx + halfW}px ${cy - halfH}px`,
+        `${cx + halfW}px ${cy + halfH}px`,
+        `${cx - halfW}px ${cy + halfH}px`,
+      ].join(", ")
+      return [polygonCollapsed(cx, cy, 4), `polygon(${end})`]
+    }
+    case "star": {
+      const R = maxRadius * Math.SQRT2 * 1.03
+      const innerRatio = 0.42
+      const starPolygon = (radius) => {
+        const verts = []
+        for (let i = 0; i < 5; i++) {
+          const outerA = -Math.PI / 2 + (i * 2 * Math.PI) / 5
+          verts.push(
+            `${cx + radius * Math.cos(outerA)}px ${cy + radius * Math.sin(outerA)}px`
+          )
+          const innerA = outerA + Math.PI / 5
+          verts.push(
+            `${cx + radius * innerRatio * Math.cos(innerA)}px ${cy + radius * innerRatio * Math.sin(innerA)}px`
+          )
+        }
+        return `polygon(${verts.join(", ")})`
+      }
+      const startR = Math.max(2, R * 0.025)
+      return [starPolygon(startR), starPolygon(R)]
+    }
+    case "circle":
+    default:
+      return [
+        `circle(0px at ${cx}px ${cy}px)`,
+        `circle(${maxRadius}px at ${cx}px ${cy}px)`,
+      ]
+  }
+}
+
+export const AnimatedThemeToggler = ({
   theme,
   onToggle,
-  variant = "circle",
-  duration = 500,
+  variant,
+  duration = 400,
   fromCenter = false,
   className = "",
-}) {
-  const btnRef = useRef(null)
+  ...props
+}) => {
+  const shape = variant ?? "circle"
   const isLight = theme === "light"
+  const buttonRef = useRef(null)
 
-  const handleToggle = useCallback(
-    async (e) => {
-      // If View Transitions API is not supported, fallback to instant toggle
-      if (!document.startViewTransition) {
-        onToggle()
-        return
-      }
+  const toggleTheme = useCallback(() => {
+    const button = buttonRef.current
+    if (!button) return
 
-      // Calculate origin for the clip-path
-      let x, y
-      if (fromCenter) {
-        x = window.innerWidth / 2
-        y = window.innerHeight / 2
-      } else {
-        const rect = btnRef.current.getBoundingClientRect()
-        x = rect.left + rect.width / 2
-        y = rect.top + rect.height / 2
-      }
+    const viewportWidth = window.visualViewport?.width ?? window.innerWidth
+    const viewportHeight = window.visualViewport?.height ?? window.innerHeight
 
-      // Calculate the maximum radius needed to cover the entire viewport
-      const maxRadius = Math.hypot(
-        Math.max(x, window.innerWidth - x),
-        Math.max(y, window.innerHeight - y)
+    let x, y
+    if (fromCenter) {
+      x = viewportWidth / 2
+      y = viewportHeight / 2
+    } else {
+      const { top, left, width, height } = button.getBoundingClientRect()
+      x = left + width / 2
+      y = top + height / 2
+    }
+
+    const maxRadius = Math.hypot(
+      Math.max(x, viewportWidth - x),
+      Math.max(y, viewportHeight - y)
+    )
+
+    if (typeof document.startViewTransition !== "function") {
+      onToggle()
+      return
+    }
+
+    const root = document.documentElement
+    root.dataset.magicuiThemeVt = "active"
+    root.style.setProperty(
+      "--magicui-theme-toggle-vt-duration",
+      `${duration}ms`
+    )
+    const cleanup = () => {
+      delete root.dataset.magicuiThemeVt
+      root.style.removeProperty("--magicui-theme-toggle-vt-duration")
+    }
+
+    const transition = document.startViewTransition(() => {
+      flushSync(onToggle)
+    })
+    
+    if (typeof transition?.finished?.finally === "function") {
+      transition.finished.finally(cleanup)
+    } else {
+      cleanup()
+    }
+
+    const ready = transition?.ready
+    if (ready && typeof ready.then === "function") {
+      const clipPath = getThemeTransitionClipPaths(
+        shape,
+        x,
+        y,
+        maxRadius,
+        viewportWidth,
+        viewportHeight
       )
-
-      // Set CSS custom properties for the clip-path origin
-      document.documentElement.style.setProperty("--x", `${x}px`)
-      document.documentElement.style.setProperty("--y", `${y}px`)
-
-      const transition = document.startViewTransition(() => {
-        onToggle()
-      })
-
-      try {
-        await transition.ready
-
-        const clipFn = CLIP_PATHS[variant] || CLIP_PATHS.circle
-
-        // Determine animation direction: dark->light expands new, light->dark contracts new
-        const startClip = clipFn(0)
-        const endClip = clipFn(maxRadius)
-
+      ready.then(() => {
         document.documentElement.animate(
           {
-            clipPath: isLight
-              ? [endClip, startClip]  // light to dark: contract
-              : [startClip, endClip], // dark to light: expand
+            clipPath,
           },
           {
             duration,
-            easing: "cubic-bezier(0.65, 0, 0.35, 1)",
-            pseudoElement: isLight
-              ? "::view-transition-old(root)"
-              : "::view-transition-new(root)",
+            easing: shape === "star" ? "linear" : "ease-in-out",
+            fill: "forwards",
+            pseudoElement: "::view-transition-new(root)",
           }
         )
-      } catch {
-        // View transition was skipped — toggle already applied
-      }
-    },
-    [onToggle, variant, duration, fromCenter, isLight]
-  )
+      })
+    }
+  }, [shape, fromCenter, duration, onToggle])
 
   return (
     <button
-      ref={btnRef}
+      ref={buttonRef}
       type="button"
-      onClick={handleToggle}
+      onClick={toggleTheme}
       aria-label={`Switch to ${isLight ? "dark" : "light"} theme`}
-      className={`group relative h-10 w-10 rounded-full border border-white/10 bg-white/5 p-0 backdrop-blur-xl transition-all duration-300 hover:bg-white/10 hover:border-white/20 ${className}`}
+      className={`relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white ${className}`}
+      {...props}
     >
-      <motion.div
-        initial={false}
-        animate={{
-          rotate: isLight ? 180 : 0,
-          scale: isLight ? 1.02 : 1,
-        }}
-        transition={{ type: "spring", stiffness: 260, damping: 20 }}
-        className="absolute inset-0 rounded-full bg-linear-to-br from-teal-400/20 via-emerald-500/10 to-violet-500/20 opacity-80 transition-opacity group-hover:opacity-100"
-      />
-
-      <motion.span
-        initial={false}
-        animate={{
-          rotate: isLight ? 35 : 0,
-          scale: isLight ? 0.92 : 1,
-        }}
-        transition={{ type: "spring", stiffness: 320, damping: 24 }}
-        className="absolute inset-1 z-10 flex items-center justify-center rounded-full bg-linear-to-br from-teal-400 to-emerald-500 text-white shadow-lg shadow-teal-500/30"
-      >
-        {isLight ? <Moon size={15} strokeWidth={1.8} /> : <Sun size={15} strokeWidth={1.8} />}
-      </motion.span>
-
-      <motion.span
-        initial={false}
-        animate={{ opacity: isLight ? 0.18 : 0.26, scale: isLight ? 1.08 : 1 }}
-        transition={{ duration: 0.25 }}
-        className="pointer-events-none absolute -inset-1 rounded-full bg-teal-400/40 blur-md"
-      />
+      {isLight ? <Moon size={20} strokeWidth={1.5} /> : <Sun size={20} strokeWidth={1.5} />}
+      <span className="sr-only">Toggle theme</span>
     </button>
   )
 }
