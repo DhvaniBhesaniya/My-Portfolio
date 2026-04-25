@@ -22,7 +22,7 @@ const driveCards = [
   {
     icon: GraduationCap,
     title: "Education",
-    value: "B.Tech IT",
+    value: "R.K University / B.Tech IT / 8.56 SGPA (2020-2024)",
   },
   {
     icon: FolderOpen,

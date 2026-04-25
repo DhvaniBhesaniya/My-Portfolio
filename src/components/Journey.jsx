@@ -6,43 +6,40 @@ import { NumberTicker } from "@/components/magicui/number-ticker"
 
 const timelineItems = [
   {
-    type: "education",
-    title: "Bachelor in Information Technology",
-    institution: "RK University",
-    location: "Rajkot, Gujarat",
-    period: "2020 - 2024",
-    highlights: ["CGPA: 8.56", "Specialized in Backend Systems"],
-    icon: BookOpen,
-    color: "violet",
-  },
-  {
     type: "experience",
-    title: "Backend Developer Intern",
-    company: "Inventyv Software Services",
-    location: "Remote",
-    period: "Dec 2023 - May 2024",
-    highlights: ["Rust", "TiKV", "Elasticsearch"],
+    title: "Software Engineer",
+    company: "Inventyv Software Pvt. Ltd.",
+    location: "Ahmedabad, India",
+    period: "Jun 2025 - Present",
+    description: "Led backend development using Rust and Node.js. Architected datalayer library unifying drivers for TiKV, Kafka, and Elasticsearch.",
+    highlights: ["Rust", "Node.js", "TiKV", "Microservices"],
     icon: Briefcase,
     color: "emerald",
   },
+
   {
-    type: "project",
-    title: "Ledger Core",
-    description: "Production-ready ledger system with RBAC, API key management, and real-time transaction processing",
-    period: "2024",
-    highlights: ["Rust", "PostgreSQL", "Docker"],
+    type: "experience",
+    title: "Junior Software Engineer",
+    company: "Inventyv Software Pvt. Ltd.",
+    location: "Ahmedabad, India",
+    period: "Jun 2024 - Jun 2025",
+    description: "Core contributor to unified Data Access Layer. Developed high-speed gRPC replication service for cluster-to-cluster data migration.",
+    highlights: ["gRPC", "Distributed Systems", "DAL"],
     icon: Code2,
-    color: "amber",
-  },
-  {
-    type: "project",
-    title: "Documind",
-    description: "AI-powered platform to chat with documents using Gemini AI and Pinecone",
-    period: "2024",
-    highlights: ["React", "Node.js", "MongoDB"],
-    icon: Zap,
     color: "cyan",
   },
+  {
+    type: "experience",
+    title: "Software Developer Intern",
+    company: "Inventyv Software Pvt. Ltd.",
+    location: "Ahmedabad, India",
+    period: "Dec 2023 - Jun 2024",
+    description: "Developed RESTful APIs using Rust (Axum), contributed to SUMS backend, and worked with Docker, Kafka & CI/CD.",
+    highlights: ["Rust", "Axum", "Docker", "Kafka"],
+    icon: BookOpen,
+    color: "violet",
+  },
+  ,
 ]
 
 const colorMap = {
@@ -68,7 +65,7 @@ export default function Journey() {
           </BlurFade>
           <BlurFade delay={0.2} inView>
             <h2 className="section-heading">
-              My Professional <br/>
+              My Professional <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-violet-400">Journey</span>
             </h2>
           </BlurFade>
@@ -76,18 +73,18 @@ export default function Journey() {
 
         <div className="relative">
           <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-teal-500/30 to-transparent hidden lg:block" />
-          
+
           <div className="grid lg:grid-cols-2 gap-8 relative">
             {timelineItems.map((item, index) => {
               const colors = colorMap[item.color]
               const Icon = item.icon
               const isLeft = index % 2 === 0
-              
+
               return (
-                <BlurFade 
-                  key={item.title} 
-                  delay={0.1 + index * 0.1} 
-                  inView 
+                <BlurFade
+                  key={item.title}
+                  delay={0.1 + index * 0.1}
+                  inView
                   direction={isLeft ? "left" : "right"}
                   className={`relative ${isLeft ? 'lg:pr-12' : 'lg:pl-12'}`}
                 >
@@ -99,7 +96,7 @@ export default function Journey() {
                     className="glass-panel glass-panel-hover rounded-3xl p-8 relative overflow-hidden group"
                   >
                     <div className={`absolute top-0 right-0 w-32 h-32 ${colors.bg} rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity`} />
-                    
+
                     <div className="relative z-10">
                       <div className="flex items-start justify-between gap-4 mb-4">
                         <div className={`w-12 h-12 rounded-2xl ${colors.bg} border ${colors.border} flex items-center justify-center`}>
@@ -128,7 +125,7 @@ export default function Journey() {
 
                       <div className="flex flex-wrap gap-2">
                         {(item.highlights || []).map((highlight) => (
-                          <span 
+                          <span
                             key={highlight}
                             className={`px-3 py-1.5 rounded-full ${colors.bg} text-white/70 text-xs border ${colors.border}`}
                           >
