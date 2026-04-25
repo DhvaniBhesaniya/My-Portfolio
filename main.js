@@ -127,6 +127,61 @@ cards.forEach(card => {
 });
 
 /**
+ * Project Filter Functionality
+ * Handles filtering of project cards based on category
+ */
+function initProjectFilters() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  if (filterButtons.length === 0 || projectCards.length === 0) return;
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const filterValue = button.getAttribute('data-filter');
+
+      // Update active button
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      // Filter projects with smooth animation
+      projectCards.forEach(card => {
+        const categories = card.getAttribute('data-category') || '';
+        
+        if (filterValue === 'all' || categories.includes(filterValue)) {
+          // Show card with fade-in animation
+          card.style.display = 'flex';
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          }, 10);
+        } else {
+          // Hide card with fade-out animation
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.8)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 300);
+        }
+      });
+    });
+  });
+
+  // Initialize card styles for animation
+  projectCards.forEach(card => {
+    card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    card.style.opacity = '1';
+    card.style.transform = 'scale(1)';
+  });
+}
+
+// Initialize filters when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  initProjectFilters();
+});
+
+
+/**
  * Typing Animation Effect
  * Creates a typewriter effect for the job title
  */
