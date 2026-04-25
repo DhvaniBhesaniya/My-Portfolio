@@ -1,0 +1,197 @@
+# Dhvani's Portfolio — React SPA Conversion Plan
+
+## Overview
+
+Convert the existing vanilla HTML/CSS/JS portfolio at `/home/dhvani/personal_work/My-Portfolio` into a modern React single-page application. The existing site uses `index.html` + `style.css` + `main.js` in the root with assets already in `public/assets/`.
+
+---
+
+## Key Decisions
+
+> [!IMPORTANT]
+> **Scaffold inside the existing repo root.** The existing `public/assets/` directory (images, resume, certificates) already exists and is correctly structured. We will scaffold the Vite app **directly in the project root**, NOT in a subfolder, so the existing assets are preserved in `public/`.
+
+> [!WARNING]
+> The prompt forbids TypeScript. Every generated file must be `.js` or `.jsx`. No `tsconfig.json`, no `.ts`/`.tsx`. Shadcn init must be configured to use JavaScript.
+
+> [!NOTE]
+> Magic UI components must be **manually written** (copy-paste source) — they are not installable via npm. We'll write idiomatic JSX versions of `Particles`, `TypingAnimation`, and `MagicCard`.
+
+---
+
+## Tech Stack
+
+| Layer | Tool |
+|---|---|
+| Build | Vite (latest) — `vite.config.js` |
+| Framework | React 19, `.jsx` files only |
+| Styling | Tailwind CSS v4 (`@tailwindcss/vite`) |
+| Components | shadcn/ui (Radix-based) |
+| Animation | `motion` package — `import from "motion/react"` |
+| Animated UI | Magic UI — `Particles`, `TypingAnimation`, `MagicCard` (hand-written JSX) |
+| Smooth scroll | `lenis` (latest) |
+| Icons | `lucide-react` |
+| Email | `@emailjs/browser` |
+| Routing | None — single page, anchor-based scroll |
+
+---
+
+## Proposed Changes
+
+### Phase 0 — Clean up & scaffold
+
+#### [MODIFY] Existing root files
+- Backup `index.html`, `style.css`, `main.js` → these will be replaced by React/Vite equivalents.
+- The `public/assets/` tree is **preserved as-is** — no changes needed there.
+
+#### [NEW] Vite scaffold (runs in project root)
+```bash
+# Inside /home/dhvani/personal_work/My-Portfolio
+npm create vite@latest . -- --template react
+npm install
+npm install motion lenis lucide-react @emailjs/browser
+npm install -D tailwindcss @tailwindcss/vite
+# shadcn init (JS mode, no TS)
+npx shadcn@latest init --yes
+npx shadcn@latest add button input textarea badge card
+```
+
+---
+
+### Phase 1 — Config files
+
+#### [NEW] `vite.config.js`
+```js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+import path from 'path'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: { alias: { '@': path.resolve(__dirname, './src') } },
+})
+```
+
+#### [MODIFY] `src/index.css`
+Tailwind v4 CSS-first approach:
+```css
+@import "tailwindcss";
+@theme {
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-primary-light: #818cf8;
+  --font-sans: 'Montserrat', 'Open Sans', system-ui, sans-serif;
+}
+```
+Plus CSS `@keyframes` for orbital solar system animation.
+
+#### [MODIFY] `index.html`
+Add Google Fonts (Montserrat + Open Sans), meta tags, favicon.
+
+---
+
+### Phase 2 — Entry point & hooks
+
+#### [NEW] `src/main.jsx`
+Lenis smooth scroll init + `ReactDOM.createRoot`.
+
+#### [NEW] `src/hooks/useLenis.js`
+`useScrollTo` hook that calls `window.lenis.scrollTo`.
+
+---
+
+### Phase 3 — Data files
+
+#### [NEW] `src/data/projects.js` — 8 projects (exact data from prompt)
+#### [NEW] `src/data/skills.js` — skill tag groups
+#### [NEW] `src/data/services.js` — 4 service cards
+#### [NEW] `src/data/certifications.js` — certification images
+
+---
+
+### Phase 4 — Magic UI components (hand-written)
+
+#### [NEW] `src/components/magicui/particles.jsx`
+Canvas-based particle system, props: `quantity`, `color`, `className`.
+
+#### [NEW] `src/components/magicui/typing-animation.jsx`
+Types and deletes text cycling through an array, infinite loop.
+
+#### [NEW] `src/components/magicui/magic-card.jsx`
+Spotlight hover effect using mouse position tracking + radial gradient overlay.
+
+---
+
+### Phase 5 — Section components
+
+#### [NEW] `src/components/LoadingScreen.jsx`
+4s intro animation → slide-up exit via `AnimatePresence`.
+
+#### [NEW] `src/components/Navbar.jsx`
+- Fixed, transparent → blurred on scroll
+- Nav links with IntersectionObserver active tracking
+- Mobile hamburger with `AnimatePresence`
+- Theme toggle (dark/light, persists localStorage)
+
+#### [NEW] `src/components/Hero.jsx`
+- Left: name, `TypingAnimation`, bio, badges, CTA buttons, social icons
+- Right: circular photo + pulsing glowing ring
+- Background: `Particles`
+
+#### [NEW] `src/components/About.jsx`
+- Photo + bio text + 3 "What Drives Me" shadcn `Card` components
+
+#### [NEW] `src/components/Skills.jsx`
+- Left: CSS orbital/solar system animation
+- Right: shadcn `Badge` groups for skill tags
+
+#### [NEW] `src/components/Journey.jsx`
+- 2×2 grid of 4 cards: Summary, Education, Experience, Early Projects
+
+#### [NEW] `src/components/Projects.jsx`
+- Filter buttons + `AnimatePresence` + `layout` prop on grid
+
+#### [NEW] `src/components/ProjectCard.jsx`
+- Wrapped in `MagicCard`, shows image, title, description, tags, action buttons
+
+#### [NEW] `src/components/Services.jsx`
+- 4 service cards with Lucide icons, hover lift Motion
+
+#### [NEW] `src/components/Contact.jsx`
+- Left: contact info + social links
+- Right: shadcn form + EmailJS integration
+
+#### [NEW] `src/components/Footer.jsx`
+- Logo, nav links, social icons, copyright
+
+---
+
+### Phase 6 — App assembly
+
+#### [MODIFY] `src/App.jsx`
+- `isLoading` state → renders `LoadingScreen` or main content
+- Back-to-top button with opacity based on scroll Y
+- Renders all 9 sections in order
+
+---
+
+## Verification Plan
+
+### Automated
+- `npm run dev` — dev server starts without errors
+- Browser check: all 8 sections render
+- Filter buttons work in Projects
+- Theme toggle persists on refresh
+
+### Manual Test Checklist
+- [ ] Lenis smooth scroll on nav clicks
+- [ ] EmailJS form submission
+- [ ] Resume PDF download
+- [ ] Loading screen shows then exits
+- [ ] Particles visible in Hero background
+- [ ] TypingAnimation cycles all 4 roles
+- [ ] MagicCard hover effect on project cards
+- [ ] Mobile responsive (375px, 768px, 1280px)
+- [ ] No TypeScript files in repo
+- [ ] No console errors

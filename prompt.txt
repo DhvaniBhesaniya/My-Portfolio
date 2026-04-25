@@ -1,0 +1,700 @@
+# Antigravity Prompt — Convert Dhvani's Portfolio to React
+
+---
+
+## MISSION
+
+Convert my existing vanilla HTML/CSS/JS portfolio into a modern React SPA.
+Use **JavaScript only** — no TypeScript, no `.ts`, no `.tsx`, no `tsconfig.json` anywhere.
+No Next.js. Pure Vite + React client-side app.
+
+---
+
+## EXACT TECH STACK — no substitutions
+
+| Layer | Tool |
+|---|---|
+| Build | Vite (latest) — `vite.config.js` not `.ts` |
+| Framework | React 19, `.jsx` files only |
+| Styling | Tailwind CSS v4 (CSS-first, no `tailwind.config.js`) |
+| Components | shadcn/ui (Radix-based, copy via CLI) |
+| Animation | `motion` package (formerly framer-motion — import from `"motion/react"`) |
+| Animated UI | Magic UI — copy-paste only 3 components: `Particles`, `TypingAnimation`, `MagicCard` |
+| Smooth scroll | `lenis` (latest) |
+| Icons | `lucide-react` |
+| Email | `@emailjs/browser` (keep existing EmailJS config) |
+| Routing | None — single page, anchor-based scroll |
+
+---
+
+## INSTALL COMMANDS (run in order)
+
+```bash
+npm create vite@latest my-portfolio -- --template react
+cd my-portfolio
+npm install motion lenis lucide-react @emailjs/browser
+npm install -D tailwindcss @tailwindcss/vite
+npx shadcn@latest init
+npx shadcn@latest add button input textarea badge card
+```
+
+Manually copy these Magic UI components into `src/components/magicui/`:
+- `particles.jsx` from https://magicui.design/docs/components/particles
+- `typing-animation.jsx` from https://magicui.design/docs/components/typing-animation
+- `magic-card.jsx` from https://magicui.design/docs/components/magic-card
+
+---
+
+## PROJECT FILE STRUCTURE
+
+```
+my-portfolio/
+├── public/
+│   ├── favicon.jpeg
+│   └── assets/
+│       ├── img/
+│       │   ├── dhvani.jpeg
+│       │   ├── dhvani2.jpg
+│       │   ├── favicon.jpeg
+│       │   ├── certification/
+│       │   │   ├── dai.jpg
+│       │   │   ├── google.png
+│       │   │   ├── hackerrank.png
+│       │   │   ├── ibm.jpg
+│       │   │   ├── michigan.png
+│       │   │   ├── stanford.jpg
+│       │   │   └── ucsd.jpg
+│       │   └── portfolio/
+│       │       ├── documind.png
+│       │       ├── rust_chat_app.png
+│       │       ├── ledger_core.png
+│       │       ├── estate2.jpg
+│       │       ├── gemini.jpeg
+│       │       ├── Food-delivery.jpg
+│       │       ├── ai-web-summarizer.jpeg
+│       │       └── twiter.png
+│       ├── certificates/
+│       │   └── Web Design for Everybody Capstone.pdf
+│       └── resume/
+│           └── Dhvani_Bhesaniya.pdf
+├── src/
+│   ├── main.jsx
+│   ├── App.jsx
+│   ├── index.css
+│   ├── components/
+│   │   ├── ui/                  ← shadcn auto-generated
+│   │   ├── magicui/             ← copied Magic UI components
+│   │   │   ├── particles.jsx
+│   │   │   ├── typing-animation.jsx
+│   │   │   └── magic-card.jsx
+│   │   ├── Navbar.jsx
+│   │   ├── Hero.jsx
+│   │   ├── About.jsx
+│   │   ├── Skills.jsx
+│   │   ├── Journey.jsx
+│   │   ├── Projects.jsx
+│   │   ├── ProjectCard.jsx
+│   │   ├── Services.jsx
+│   │   ├── Contact.jsx
+│   │   └── Footer.jsx
+│   ├── data/
+│   │   ├── projects.js
+│   │   ├── skills.js
+│   │   ├── services.js
+│   │   └── certifications.js
+│   └── hooks/
+│       └── useLenis.js
+├── index.html
+├── vite.config.js
+├── package.json
+└── components.json
+```
+
+---
+
+## VITE CONFIG
+
+```js
+// vite.config.js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+import path from 'path'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: { '@': path.resolve(__dirname, './src') },
+  },
+})
+```
+
+---
+
+## TAILWIND v4 CSS SETUP
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-primary-light: #818cf8;
+  --font-sans: 'Montserrat', 'Open Sans', system-ui, sans-serif;
+}
+```
+
+Import Montserrat + Open Sans in `index.html`:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300..900&family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+```
+
+---
+
+## LENIS SETUP
+
+```js
+// src/main.jsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+import Lenis from 'lenis'
+
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+})
+
+function raf(time) {
+  lenis.raf(time)
+  requestAnimationFrame(raf)
+}
+requestAnimationFrame(raf)
+
+// Make lenis available globally for anchor clicks
+window.lenis = lenis
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)
+```
+
+```js
+// src/hooks/useLenis.js
+import { useEffect } from 'react'
+
+export function useScrollTo() {
+  const scrollTo = (targetId) => {
+    const el = document.getElementById(targetId)
+    if (el && window.lenis) {
+      window.lenis.scrollTo(el, { offset: -80, duration: 1.2 })
+    }
+  }
+  return { scrollTo }
+}
+```
+
+---
+
+## MOTION ANIMATION PATTERNS — use these exactly
+
+```js
+// Standard fade-up — use on every section's children
+export const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+}
+
+// Stagger container
+export const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } }
+}
+
+// Always use viewport={{ once: true }} — never re-animate on scroll-back
+<motion.div
+  variants={staggerContainer}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, margin: "-50px" }}
+>
+  <motion.div variants={fadeUp}>...</motion.div>
+</motion.div>
+```
+
+Import from `"motion/react"` not `"framer-motion"`.
+
+---
+
+## APP.JSX SECTION ORDER
+
+```jsx
+// src/App.jsx
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import About from './components/About'
+import Skills from './components/Skills'
+import Journey from './components/Journey'
+import Projects from './components/Projects'
+import Services from './components/Services'
+import Contact from './components/Contact'
+import Footer from './components/Footer'
+
+export default function App() {
+  return (
+    <div className="bg-[#0f0f13] text-white min-h-screen">
+      <Navbar />
+      <Hero />
+      <About />
+      <Skills />
+      <Journey />
+      <Projects />
+      <Services />
+      <Contact />
+      <Footer />
+    </div>
+  )
+}
+```
+
+---
+
+## SECTION-BY-SECTION SPECS
+
+---
+
+### NAVBAR.JSX
+
+- Fixed top, `position: fixed`, full width, z-50
+- Default: transparent background
+- On scroll past 50px: `backdrop-blur-md bg-black/60 border-b border-white/10`
+- Animate navbar bg change with Motion `animate` prop based on scroll state (`useScroll` from motion)
+- Left: text logo **"Dhvani Bhesaniya"** in Montserrat bold with primary color accent on last name
+- Right: nav links — Home, About, Skills, Journey, Projects, Services, Contact
+- Active link: underline + primary color, tracked via scroll position with IntersectionObserver
+- Click → call `scrollTo(sectionId)` from `useLenis` hook
+- Mobile: hamburger icon (Lucide `Menu` / `X`), slide-down menu with Motion `AnimatePresence`
+- Theme toggle button: sun/moon icon (Lucide), toggles `data-theme="light"` on `<html>`, saves to localStorage. Default is dark.
+
+---
+
+### HERO.JSX
+
+**Left column:**
+- `<h1>Hi, I'm Dhvani Bhesaniya</h1>` — Montserrat, large, white
+- Use Magic UI `<TypingAnimation>` cycling through these exact words in sequence:
+  `["Web & Backend Developer", "Node.js Developer", "Rust Developer", "Full-Stack Developer"]`
+  — each typed then deleted, loop forever
+- Bio paragraph:
+  > "As a backend developer, I thrive in challenging environments that encourage continuous learning and creativity. I am dedicated to utilizing my skills to build innovative and secure solutions."
+- Location + status badges:
+  - `📍 Ahmedabad, India`
+  - `💼 Available Now` (green dot animation)
+- Two CTA buttons:
+  - **"Hire Me"** → scrolls to `#contact` via Lenis
+  - **"Download Resume"** → `href="/assets/resume/Dhvani_Bhesaniya.pdf"` download attribute
+- Social icons row labeled "Follow me:" with Lucide icons or SVG for:
+  - GitHub → `https://github.com/DhvaniBhesaniya`
+  - LinkedIn → `https://linkedin.com/in/dhvani-bhesaniya`
+  - Facebook → `https://www.facebook.com/profile.php?id=100069188478674`
+  - Instagram → `https://www.instagram.com/_d_patel06_?igsh=MWFraGIwcm9xbnJydQ==`
+
+**Right column:**
+- Profile photo: `/assets/img/dhvani.jpeg` — circular, `object-cover`
+- Animated glowing ring using Motion: pulsing indigo/violet ring around the circle
+
+**Background:**
+- Use Magic UI `<Particles>` component as full-section absolute background
+- Color: indigo/violet particles, low density, subtle
+
+**Entrance:** All left-column elements stagger in with `fadeUp` on load (not whileInView — runs immediately)
+
+---
+
+### ABOUT.JSX
+
+Section label: `ABOUT ME`
+Section heading: `Building Meaningful Digital Experiences`
+
+**Two-column layout:**
+- Left: photo `/assets/img/dhvani2.jpg` — rounded-2xl, slight border `border border-white/10`
+- Right: bio text
+
+**Bio paragraphs (use exactly):**
+> "I'm a Web & Backend Developer passionate about building innovative and secure backend solutions. My journey began with a strong foundation in IT Engineering and evolved into a deep expertise in backend development, problem-solving, and creating efficient systems."
+
+> "When I'm not coding, I enjoy learning new technologies, improving my projects, and exploring better ways to make applications faster, more secure, and scalable."
+
+**"What Drives Me" cards row (3 cards):**
+| Icon | Title | Value |
+|---|---|---|
+| Code | Technologies | Rust, Node.js, React |
+| GraduationCap | Education | B.Tech IT |
+| FolderOpen | Projects | 5+ Major Projects |
+
+Use shadcn/ui `Card` component for these. Motion stagger on whileInView.
+
+---
+
+### SKILLS.JSX
+
+Section label: `SKILLS`
+Section heading: `Technical Expertise`
+
+**Left: Animated orbital/solar system** (recreate the original solar system CSS animation):
+- Center sun: `<Code />` Lucide icon, pulsing glow
+- Orbit 1 (inner): Node.js icon, React icon — rotating orbit ring
+- Orbit 2 (middle): MongoDB, Express, AWS icons
+- Orbit 3 (outer): Rust (gear), Figma, Python, paintbrush
+- Use CSS `@keyframes` rotation for orbits in `index.css`, not Motion (performance)
+
+**Right: Skill tag groups** (use shadcn `Badge` for each tag):
+
+```
+Core Expertise (featured, indigo badges):
+  Rust · Axum · Tokio · Polars · Napi
+
+Languages:
+  Rust · Java · Python · JavaScript
+
+Backend:
+  Node.js · Axum · Napi · Tokio · Express
+
+Data:
+  TiKV · Elasticsearch · MongoDB · SQL · Redis
+```
+
+Motion `staggerChildren` on the badge groups, `whileInView`.
+
+---
+
+### JOURNEY.JSX
+
+Section label: `JOURNEY`
+Section heading: `Professional Timeline`
+
+4 cards in a 2×2 grid (or stacked on mobile):
+
+**Card 1 — Summary**
+> "I am a backend developer with a strong foundation in IT Engineering. I specialize in creating efficient backend code and excel in solving complex problems through thorough research and analysis."
+>
+> 📍 Gujarat, India · ✉️ dhvani612@gmail.com
+
+**Card 2 — Education**
+Timeline item:
+- **Bachelor In Info. Tech.**
+- 2020 – 2024
+- Rk University Rajkot, Gujarat
+- CGPA: 8.56
+
+**Card 3 — Experience**
+Timeline item:
+- **Backend Developer Intern**
+- Dec 2023 – May 2024
+- Inventyv Software Services
+- Stack: Rust, TiKV, Elasticsearch
+
+**Card 4 — Early Projects**
+List:
+- D's Estate Website — React · 2022
+- Twitter Clone — React · 2023
+
+Motion `fadeUp` whileInView on each card with stagger.
+
+---
+
+### PROJECTS.JSX + PROJECTCARD.JSX
+
+Section label: `PORTFOLIO`
+Section heading: `Featured Work`
+Subtext: `"A showcase of my recent projects demonstrating expertise in full-stack development."`
+
+**Filter buttons** (keep exact filter values from original):
+`All · Rust-Project · React-Projects · AI · Web · API`
+
+Active filter: indigo background, others: ghost style.
+Filter animation: Motion `AnimatePresence` + `layout` prop on cards for smooth reorder.
+
+**Project data in `src/data/projects.js`** — use exactly:
+
+```js
+export const projects = [
+  {
+    id: 1,
+    title: "Documind",
+    description: "A platform to chat with your documents using AI.",
+    image: "/assets/img/portfolio/documind.png",
+    tags: ["React", "Node", "Gemini AI", "Pinecone", "MongoDB"],
+    category: ["react", "ai", "web"],
+    liveUrl: null,
+    repoUrl: "https://github.com/DhvaniBhesaniya/DocuMind",
+  },
+  {
+    id: 2,
+    title: "Rust Chat App",
+    description: "A real-time chat application built with Rust and WebSockets.",
+    image: "/assets/img/portfolio/rust_chat_app.png",
+    tags: ["Rust", "socketioxide", "Axum", "HTML & JS"],
+    category: ["rust", "web"],
+    liveUrl: "https://rust-chat-app-pnkm.onrender.com",
+    repoUrl: null,
+  },
+  {
+    id: 3,
+    title: "Ledger Core",
+    description: "High-performance production-ready ledger system with RBAC, API key management, and real-time transaction processing.",
+    image: "/assets/img/portfolio/ledger_core.png",
+    tags: ["Rust", "Docker", "Diesel ORM", "PostgreSQL"],
+    category: ["rust", "api"],
+    liveUrl: null,
+    repoUrl: "https://github.com/DhvaniBhesaniya/ledger-core",
+  },
+  {
+    id: 4,
+    title: "D's Estate Website",
+    description: "Full-stack real estate website with listings, search, and auth.",
+    image: "/assets/img/portfolio/estate2.jpg",
+    tags: ["React", "Node.js", "MongoDB"],
+    category: ["react", "web"],
+    liveUrl: "https://d-mern-estate.onrender.com/",
+    repoUrl: null,
+  },
+  {
+    id: 5,
+    title: "Google Gemini Clone",
+    description: "AI-powered chatbot application replicating Google Gemini's functionality.",
+    image: "/assets/img/portfolio/gemini.jpeg",
+    tags: ["React", "Node.js", "AI API"],
+    category: ["react", "ai", "web"],
+    liveUrl: "https://google-gemini-2-0-clone.onrender.com/",
+    repoUrl: null,
+  },
+  {
+    id: 6,
+    title: "Tomato Food App",
+    description: "Food delivery application with ordering, cart, and Stripe payment integration.",
+    image: "/assets/img/portfolio/Food-delivery.jpg",
+    tags: ["React", "Node.js", "Stripe"],
+    category: ["react", "web"],
+    liveUrl: "https://food-ordering-xaxd.onrender.com",
+    repoUrl: null,
+  },
+  {
+    id: 7,
+    title: "AI Web Summarizer",
+    description: "Summarizes web content using advanced natural language processing via RapidAPI.",
+    image: "/assets/img/portfolio/ai-web-summarizer.jpeg",
+    tags: ["AI/ML", "JavaScript", "RapidAPI"],
+    category: ["ai", "web"],
+    liveUrl: "https://dhvanibhesaniya.github.io/Ai-Summarizer/",
+    repoUrl: null,
+  },
+  {
+    id: 8,
+    title: "Twitter Clone",
+    description: "Social media platform clone with real-time updates and authentication.",
+    image: "/assets/img/portfolio/twiter.png",
+    tags: ["React", "Node", "Socket.io"],
+    category: ["react", "web"],
+    liveUrl: "https://twiter-clone-ol5q.onrender.com/",
+    repoUrl: null,
+  },
+]
+```
+
+**ProjectCard.jsx** — wrap each card with Magic UI `<MagicCard>` for the hover spotlight effect:
+- Card shows: image (top, fixed height, object-cover), title, description, tag badges (shadcn `Badge`), action buttons
+- If `liveUrl` exists: "Live Demo" button (primary filled)
+- If `repoUrl` exists: "Source Code" button (ghost/outline)
+- If both exist: show both buttons
+- Tags use shadcn `Badge` variant="secondary"
+
+---
+
+### SERVICES.JSX
+
+Section label: `WHAT I DO`
+Section heading: `Features & Services`
+
+4 service cards from `src/data/services.js`:
+
+```js
+export const services = [
+  {
+    id: 1,
+    icon: "Server",           // Lucide icon name
+    title: "Backend Development",
+    description: "Building robust, scalable backend systems using Node.js, Express, and Rust.",
+  },
+  {
+    id: 2,
+    icon: "Layers",
+    title: "Full-Stack Development",
+    description: "Creating end-to-end solutions with React, Node.js, and MongoDB.",
+  },
+  {
+    id: 3,
+    icon: "Database",
+    title: "Database Design",
+    description: "Designing efficient database schemas for optimal performance.",
+  },
+  {
+    id: 4,
+    icon: "Plug",
+    title: "API Development",
+    description: "Developing RESTful APIs and integrating third-party services.",
+  },
+]
+```
+
+Cards: dark surface, border `border-white/10`, hover lift with Motion `whileHover={{ y: -8 }}`.
+Use Lucide icons (dynamic: `import { [icon] } from 'lucide-react'`).
+Motion stagger whileInView.
+
+---
+
+### CONTACT.JSX
+
+Section label: `CONTACT ME`
+Section heading: `Get in Touch`
+
+**Two-column layout:**
+
+**Left — Contact Info:**
+- Tagline: `"Let's collaborate!"`
+- Subtext: `"I'm always open to discuss exciting projects and new opportunities."`
+- Contact details (use Lucide icons):
+  - Mail → `dhvani612@gmail.com`
+  - Phone → `(+91) 9316590044`
+  - MapPin → `Gujarat, India`
+- Social links (same URLs as Hero):
+  - GitHub, LinkedIn, Facebook, Instagram
+
+**Right — Contact Form:**
+Use shadcn/ui `Input` and `Textarea` components.
+Fields: Your Name (`name`), Your Email (`email`), Subject (`subject`), Message (`message`)
+Submit button: "Send Message"
+
+**EmailJS integration** — keep the exact original config:
+```js
+import emailjs from '@emailjs/browser'
+
+// In component:
+const serviceID = 'service_7580yj9'
+const templateID = 'template_kfi7w35'
+const publicKey = '_4EsRjANtwBBAVH8X'
+
+// Initialize in useEffect:
+useEffect(() => {
+  emailjs.init(publicKey)
+}, [])
+
+// On submit:
+emailjs.sendForm(serviceID, templateID, formRef.current)
+  .then(() => { /* success state */ })
+  .catch((err) => { /* error state */ })
+```
+
+Submit button states: default → "Sending..." (disabled) → "Message Sent!" (green) → reset after 3s.
+Use `useRef` for the form element.
+
+---
+
+### FOOTER.JSX
+
+- Logo: `"Dhvani Bhesaniya"` — same font, primary color
+- Nav links row: Home · About · Skills · Journey · Projects · Services · Contact
+- Social icon row: GitHub, LinkedIn, Facebook, Instagram (same URLs)
+- Copyright: `© 2026 Dhvani Bhesaniya. All Rights Reserved.`
+- Thin top border `border-t border-white/10`
+
+---
+
+## THEME TOGGLE (Dark / Light)
+
+Implement globally, persisted in localStorage:
+
+```js
+// In Navbar.jsx
+const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark')
+
+useEffect(() => {
+  document.documentElement.setAttribute('data-theme', theme)
+  localStorage.setItem('theme', theme)
+}, [theme])
+
+const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
+```
+
+Icon: Lucide `Sun` when dark (click → go light), `Moon` when light (click → go dark).
+Default is **dark**.
+
+---
+
+## LOADING SCREEN (optional but recommended)
+
+Recreate the original loading animation as a React component `LoadingScreen.jsx`:
+- Shows on first render
+- Sequence: "MY PROFILE" text → laptop-code icon → 3 sub-icons → "Dhvani Bhesaniya"
+- After 4s: slide-up exit animation with Motion, then unmount via `AnimatePresence`
+- Use `useState` in `App.jsx` to track `isLoading`, render `<LoadingScreen>` or main content
+
+---
+
+## BACK TO TOP BUTTON
+
+Floating button, bottom-right, visible after scrolling 500px:
+```jsx
+<motion.button
+  onClick={() => window.lenis.scrollTo(0)}
+  initial={{ opacity: 0 }}
+  animate={{ opacity: scrollY > 500 ? 1 : 0 }}
+  whileHover={{ scale: 1.2 }}
+  className="fixed bottom-24 right-10 w-12 h-12 rounded-full bg-indigo-500 text-white flex items-center justify-center z-50"
+>
+  <ChevronUp size={20} />
+</motion.button>
+```
+
+---
+
+## WHAT NOT TO DO
+
+- NO TypeScript — not a single `.ts` or `.tsx` file
+- NO `framer-motion` import — use `motion` package, import from `"motion/react"`
+- NO `tailwind.config.js` — Tailwind v4 uses CSS `@theme` block
+- NO `@apply` directives in CSS — use Tailwind utility classes in JSX
+- NO hardcoded project data inside components — always from `data/projects.js`
+- NO Magic UI on every section — only: Hero background (Particles), Hero text (TypingAnimation), Project cards (MagicCard)
+- NO jQuery, Bootstrap, or any legacy CSS framework
+- NO `viewport={{ once: false }}` — always `once: true` to avoid re-firing animations
+- NO Next.js, Remix, or any SSR framework
+
+---
+
+## FINAL CHECKLIST
+
+- [ ] All 8 sections render in correct order
+- [ ] Lenis smooth scroll works for all nav links and CTA buttons
+- [ ] EmailJS contact form works with service ID `service_7580yj9` and template `template_kfi7w35`
+- [ ] Resume download links to `/assets/resume/Dhvani_Bhesaniya.pdf`
+- [ ] All project images load from `/assets/img/portfolio/`
+- [ ] Filter buttons correctly filter projects by category
+- [ ] TypingAnimation cycles through all 4 role strings
+- [ ] MagicCard hover spotlight effect visible on project cards
+- [ ] Theme toggle (dark/light) works and persists in localStorage
+- [ ] Dark mode is the default
+- [ ] Navbar background changes on scroll
+- [ ] Mobile responsive at 375px, 768px, 1280px
+- [ ] No TypeScript files anywhere in the project
+- [ ] No console errors
+
+---
+
+*Owner: Dhvani Bhesaniya | dhvani612@gmail.com | Gujarat, India*
+*GitHub: https://github.com/DhvaniBhesaniya*
+*LinkedIn: https://linkedin.com/in/dhvani-bhesaniya*
