@@ -11,6 +11,16 @@ export const projects = [
     repoUrl: "https://github.com/DhvaniBhesaniya/Kira_ai",
   },
   {
+    id: 13,
+    title: "Bookmark Vault",
+    description: "AI-powered bookmark intelligence system. Import, tag, organize, and explore bookmarks with semantic AI search.",
+    image: `${import.meta.env.BASE_URL}assets/img/portfolio/bookmarkvault.png`,
+    tags: ["Rust", "Axum", "MongoDB", "Gemini AI", "React"],
+    category: ["rust", "ai", "web"],
+    liveUrl: "https://bookmarkvault.onrender.com/",
+    repoUrl: "https://github.com/DhvaniBhesaniya/Bookmark-Vault",
+  },
+  {
     id: 2,
     title: "Ledger Core",
     description: "High-performance production-ready financial ledger system with RBAC, API key management, and real-time transaction processing.",
